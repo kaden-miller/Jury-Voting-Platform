@@ -25,4 +25,4 @@ define( "WPS_DIRECTORY_PATH", plugin_dir_path( WPS_FILE ) );
 define( "WPS_DIRECTORY_URL", plugins_url( null, WPS_FILE ) );
 
 // Require the main class file
-require_once( WPS_DIRECTORY_PATH . '/includes/main-class.php' );
+require_once( WPS_DIRECTORY . '/includes/main-class.php' );

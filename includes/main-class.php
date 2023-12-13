@@ -10,6 +10,7 @@ class WordPress_Plugin_Starter {
         include_once(WPS_DIRECTORY_PATH . 'includes/admin/scholarship-meta.php');
         include_once(WPS_DIRECTORY_PATH . 'templates/voting-platform.php');
         include_once(WPS_DIRECTORY_PATH . 'includes/admin/custom-post-types.php');
+        include_once(WPS_DIRECTORY_PATH . '/includes/frontend/ajax-form-handling.php');
 
         // Plugin uninstall hook
         register_uninstall_hook( WPS_FILE, array('WordPress_Plugin_Starter', 'plugin_uninstall') );
@@ -107,8 +108,8 @@ class WordPress_Plugin_Starter {
      * @method plugin_enqueue_scripts
      */
     function plugin_enqueue_admin_scripts() {
-        wp_register_style( 'wps-admin-style', WPS_DIRECTORY_URL . '/assets/dist/css/admin-style.css', array(), null );
-        wp_register_script( 'wps-admin-script', WPS_DIRECTORY_URL . '/assets/dist/js/admin-script.min.js', array(), null, true );
+        wp_register_style( 'wps-admin-style', WPS_DIRECTORY_URL . '/files/css/admin-style.css', array(), null );
+        wp_register_script( 'wps-admin-script', WPS_DIRECTORY_URL . '/files/js/admin-script.js', array(), null, true );
         wp_enqueue_script('jquery');
         wp_enqueue_style('wps-admin-style');
         wp_enqueue_script('wps-admin-script');
@@ -119,11 +120,11 @@ class WordPress_Plugin_Starter {
      * @method plugin_enqueue_scripts
      */
     function plugin_enqueue_scripts() {
-        wp_register_style( 'wps-user-style', WPS_DIRECTORY_URL . '/assets/dist/css/user-style.css', array(), null );
-        wp_register_script( 'wps-user-script', WPS_DIRECTORY_URL . '/assets/dist/js/user-script.min.js', array(), null, true );
-        wp_enqueue_script('jquery');
-        wp_enqueue_style('wps-user-style');
-        wp_enqueue_script('wps-user-script');
+        // wp_register_style( 'wps-user-style', WPS_DIRECTORY_URL . '/assets/dist/css/user-style.css', array(), null );
+        // wp_register_script( 'wps-user-script', WPS_DIRECTORY_URL . '/assets/dist/js/user-script.min.js', array(), null, true );
+        // wp_enqueue_script('jquery');
+        // wp_enqueue_style('wps-user-style');
+        // wp_enqueue_script('wps-user-script');
     }
 
     /**
