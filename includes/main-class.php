@@ -10,7 +10,9 @@ class WordPress_Plugin_Starter {
         include_once(WPS_DIRECTORY_PATH . 'includes/admin/scholarship-meta.php');
         include_once(WPS_DIRECTORY_PATH . 'templates/voting-platform.php');
         include_once(WPS_DIRECTORY_PATH . 'includes/admin/custom-post-types.php');
+        include_once(WPS_DIRECTORY_PATH . 'includes/admin/meta-troubleshooting.php');
         include_once(WPS_DIRECTORY_PATH . '/includes/frontend/ajax-form-handling.php');
+
 
         // Plugin uninstall hook
         register_uninstall_hook( WPS_FILE, array('WordPress_Plugin_Starter', 'plugin_uninstall') );

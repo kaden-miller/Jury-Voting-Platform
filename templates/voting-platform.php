@@ -1,15 +1,7 @@
 <?php
-/*  
-Template Name: Scholarship Application
-*/
-// Rest of your template code...
 
-
-// You can include any PHP logic here, like fetching dynamic values
-
-// Assuming $painting_id is set dynamically
-
-
+// Block direct access to file
+defined( 'ABSPATH' ) or die( 'Not Authorized!' );
 
 function scholarship_application_shortcode() {
     // Start output buffering
