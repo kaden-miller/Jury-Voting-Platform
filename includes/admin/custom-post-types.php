@@ -22,7 +22,7 @@ function create_scholarship_post_type() {
             'search_items'       => __( 'Search Applications' ),
             'not_found'          => __( 'No application found' ),
             'not_found_in_trash' => __( 'No application found in the Trash' ), 
-            'parent_item_colon'  => ’,
+            'parent_item_colon'  => '',
             'menu_name'          => 'Scholarship Applications'
           );
 
