@@ -45,6 +45,12 @@ function create_scholarship_post_type() {
 add_action('init', 'create_scholarship_post_type');
 
 
+function remove_custom_fields_meta_box() {
+    remove_meta_box('postcustom', 'scholarships', 'normal');
+}
+add_action('do_meta_boxes', 'remove_custom_fields_meta_box');
+
+
 
 function create_scholarship_taxonomy() {
     // Check if the post type exists before creating the taxonomy

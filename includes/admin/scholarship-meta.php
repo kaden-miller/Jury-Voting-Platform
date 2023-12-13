@@ -9,7 +9,7 @@ function add_judges_scores_meta_box() {
         'judges_scores_meta_box',           // ID of the meta box
         'Judges Scores',                    // Title of the meta box
         'display_judges_scores',            // Callback function to display content
-        'painting',                         // Post type where the meta box should appear
+        'scholarships',                         // Post type where the meta box should appear
         'normal',                           // Context (where on the screen)
         'high'                              // Priority of the meta box
     );
@@ -29,7 +29,7 @@ function display_judges_scores($post) {
 
     foreach ($judges_scores as $judge_id => $scores) {
         echo '<tr>';
-        echo '<td>' . get_judge_name_by_id($judge_id) . '</td>'; // Replace with actual function to get judge's name
+        echo '<td>' . get_judge_name_by_id($judge_id) . '</td>'; 
         foreach ($scores as $criterion => $score) {
             echo '<td>' . esc_html($score) . '</td>';
         }
@@ -58,7 +58,17 @@ function get_judges_scores_for_post($post_id) {
 }
 
 function get_judge_name_by_id($judge_id) {
-    // Assuming judge's name is their WordPress display name
     $user_info = get_userdata($judge_id);
-    return $user_info ? $user_info->display_name : 'Unknown Judge';
+
+    if ($user_info) {
+        // Check if first name is available
+        if (!empty($user_info->first_name)) {
+            return $user_info->first_name;
+        } else {
+            // Fall back to username if first name is not available
+            return $user_info->display_name;
+        }
+    } else {
+        return 'Unknown Judge';
+    }
 }

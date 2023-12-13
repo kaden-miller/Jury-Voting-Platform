@@ -21,13 +21,18 @@ function handle_judge_voting() {
     // Prefix for the custom fields
     $field_prefix = 'judge_' . $judge_id . '_';
 
+    // List of criteria fields
+    $criteria_fields = ['creativity', 'color_use', 'originality'];
+
     // Process each voting criterion
-    foreach ($_POST['criteria'] as $criterion => $value) {
-        $meta_key = $field_prefix . $criterion; // e.g., 'judge_123_creativity'
-        update_post_meta($painting_id, $meta_key, intval($value));
+    foreach ($criteria_fields as $criterion) {
+        if (isset($_POST[$criterion])) {
+            $meta_key = $field_prefix . $criterion;
+            update_post_meta($painting_id, $meta_key, intval($_POST[$criterion]));
+        }
     }
 
-    echo 'Thank you for voting!';
+    echo 'Thank you for voting! :)';
     wp_die();
 }
 
