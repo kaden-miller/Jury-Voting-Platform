@@ -1,5 +1,8 @@
 <?php
 
+ // Block direct access to file
+ defined( 'ABSPATH' ) or die( 'Not Authorized!' );
+
 // Enqueue the JavaScript file
 function enqueue_my_ajax_script() {
     wp_enqueue_script('my-ajax-handle', WPS_DIRECTORY_URL . '/assets/js/voting-form.js', array('jquery'));

@@ -1,5 +1,5 @@
 <?php
-/* 
+/*  
 Template Name: Scholarship Application
 */
 // Rest of your template code...
