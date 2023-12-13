@@ -7,6 +7,13 @@ class WordPress_Plugin_Starter {
 
     public function __construct() {
 
+        include_once(WPS_DIRECTORY_PATH . 'includes/admin/scholarship-meta.php');
+        include_once(WPS_DIRECTORY_PATH . 'templates/voting-platform.php');
+        include_once(WPS_DIRECTORY_PATH . 'includes/admin/custom-post-types.php');
+        // include_once(WPS_DIRECTORY_PATH . 'includes/admin/meta-troubleshooting.php');
+        include_once(WPS_DIRECTORY_PATH . 'includes/frontend/ajax-form-handling.php');
+
+
         // Plugin uninstall hook
         register_uninstall_hook( WPS_FILE, array('WordPress_Plugin_Starter', 'plugin_uninstall') );
 
@@ -20,6 +27,13 @@ class WordPress_Plugin_Starter {
         add_action( 'admin_enqueue_scripts', array($this, 'plugin_enqueue_admin_scripts') );
         add_action( 'admin_menu', array($this, 'plugin_admin_menu_function') );
 
+        // Register post types and taxonomies on init
+        add_action('init', 'create_scholarship_post_type');
+        add_action('init', 'create_scholarship_taxonomy');
+
+
+
+
     }
 
     public static function plugin_uninstall() { }
@@ -29,7 +43,25 @@ class WordPress_Plugin_Starter {
      * called when the plugin is activated
      * @method plugin_activate
      */
-    public function plugin_activate() { }
+    public function plugin_activate() {
+        // Check if the page exists
+        $page_title = 'Scholarship Application';
+        $page = get_page_by_title($page_title);
+
+        if (!$page) {
+            // Create the page if it doesn't exist
+            $new_page = array(
+                'post_title'    => 'Scholarship Application',
+                'post_content'  => '[scholarship_application]', // Inserting the shortcode
+                'post_type'     => 'page',
+                'post_status'   => 'publish',
+                'post_author'   => get_current_user_id(),
+            );
+            
+            wp_insert_post($new_page);
+            
+        }
+    }
 
     /**
      * Plugin deactivate function
@@ -78,8 +110,8 @@ class WordPress_Plugin_Starter {
      * @method plugin_enqueue_scripts
      */
     function plugin_enqueue_admin_scripts() {
-        wp_register_style( 'wps-admin-style', WPS_DIRECTORY_URL . '/assets/dist/css/admin-style.css', array(), null );
-        wp_register_script( 'wps-admin-script', WPS_DIRECTORY_URL . '/assets/dist/js/admin-script.min.js', array(), null, true );
+        wp_register_style( 'wps-admin-style', WPS_DIRECTORY_URL . '/files/css/admin-style.css', array(), null );
+        wp_register_script( 'wps-admin-script', WPS_DIRECTORY_URL . '/files/js/admin-script.js', array(), null, true );
         wp_enqueue_script('jquery');
         wp_enqueue_style('wps-admin-style');
         wp_enqueue_script('wps-admin-script');
@@ -90,11 +122,11 @@ class WordPress_Plugin_Starter {
      * @method plugin_enqueue_scripts
      */
     function plugin_enqueue_scripts() {
-        wp_register_style( 'wps-user-style', WPS_DIRECTORY_URL . '/assets/dist/css/user-style.css', array(), null );
-        wp_register_script( 'wps-user-script', WPS_DIRECTORY_URL . '/assets/dist/js/user-script.min.js', array(), null, true );
-        wp_enqueue_script('jquery');
-        wp_enqueue_style('wps-user-style');
-        wp_enqueue_script('wps-user-script');
+        // wp_register_style( 'wps-user-style', WPS_DIRECTORY_URL . '/assets/dist/css/user-style.css', array(), null );
+        // wp_register_script( 'wps-user-script', WPS_DIRECTORY_URL . '/assets/dist/js/user-script.min.js', array(), null, true );
+        // wp_enqueue_script('jquery');
+        // wp_enqueue_style('wps-user-style');
+        // wp_enqueue_script('wps-user-script');
     }
 
     /**
