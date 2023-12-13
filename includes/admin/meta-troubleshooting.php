@@ -1,9 +1,8 @@
 <?php
 
- // Block direct access to file
- defined( 'ABSPATH' ) or die( 'Not Authorized!' );
+// Block direct access to file
+defined( 'ABSPATH' ) or die( 'Not Authorized!' );
 
- 
 // Query for 'scholarships' post type
 $args = array(
     'post_type' => 'scholarships',
@@ -40,3 +39,6 @@ if (!empty($posts)) {
 } else {
     echo '<p>No scholarship posts found.</p>';
 }
+
+?>
+
