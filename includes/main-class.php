@@ -20,6 +20,15 @@ class WordPress_Plugin_Starter {
         add_action( 'admin_enqueue_scripts', array($this, 'plugin_enqueue_admin_scripts') );
         add_action( 'admin_menu', array($this, 'plugin_admin_menu_function') );
 
+        // Register post types and taxonomies on init
+        add_action('init', 'create_scholarship_post_type');
+        add_action('init', 'create_scholarship_taxonomy');
+
+        include_once(WPS_DIRECTORY_PATH . 'admin/scholarship-meta.php');
+        include_once(WPS_DIRECTORY_PATH . 'templates/voting-platform.php');
+
+
+
     }
 
     public static function plugin_uninstall() { }
@@ -29,7 +38,25 @@ class WordPress_Plugin_Starter {
      * called when the plugin is activated
      * @method plugin_activate
      */
-    public function plugin_activate() { }
+    public function plugin_activate() {
+        // Check if the page exists
+        $page_title = 'Scholarship Application';
+        $page = get_page_by_title($page_title);
+
+        if (!$page) {
+            // Create the page if it doesn't exist
+            $new_page = array(
+                'post_title'    => 'Scholarship Application',
+                'post_content'  => '[scholarship_application]', // Inserting the shortcode
+                'post_type'     => 'page',
+                'post_status'   => 'publish',
+                'post_author'   => get_current_user_id(),
+            );
+            
+            wp_insert_post($new_page);
+            
+        }
+    }
 
     /**
      * Plugin deactivate function
