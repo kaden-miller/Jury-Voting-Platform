@@ -11,27 +11,27 @@ function create_scholarship_post_type() {
     if (!post_type_exists('scholarships')) {
 
         $labels = array(
-            'name'               => _x( 'Scholarship Applications', 'post type general name' ),
-            'singular_name'      => _x( 'Scholarship Application', 'post type singular name' ),
-            'add_new'            => _x( 'Add New', 'book' ),
-            'add_new_item'       => __( 'Add New Application' ),
-            'edit_item'          => __( 'Edit Application' ),
-            'new_item'           => __( 'New Application' ),
-            'all_items'          => __( 'All Applications' ),
-            'view_item'          => __( 'View Application' ),
-            'search_items'       => __( 'Search Applications' ),
-            'not_found'          => __( 'No application found' ),
-            'not_found_in_trash' => __( 'No application found in the Trash' ), 
+            'name'               => _x('Scholarship Applications', 'post type general name'),
+            'singular_name'      => _x('Scholarship Application', 'post type singular name'),
+            'add_new'            => _x('Add New', 'book'),
+            'add_new_item'       => __('Add New Application'),
+            'edit_item'          => __('Edit Application'),
+            'new_item'           => __('New Application'),
+            'all_items'          => __('All Applications'),
+            'view_item'          => __('View Application'),
+            'search_items'       => __('Search Applications'),
+            'not_found'          => __('No application found'),
+            'not_found_in_trash' => __('No application found in the Trash'), 
             'parent_item_colon'  => '',
             'menu_name'          => 'Scholarship Applications'
-          );
+        );
 
         // Set up the arguments for the post type
         $args = array(
             'labels'        => $labels,
-            'description'   => 'Holds scholarship entries and voting counts.'
-            'public' => true,
-            'supports' => array('title', 'editor', 'thumbnail')
+            'description'   => 'Holds scholarship entries and voting counts.',
+            'public'        => true,
+            'supports'      => array('title', 'editor', 'thumbnail')
             // ... You can add more arguments as needed
         );
 
@@ -39,6 +39,7 @@ function create_scholarship_post_type() {
         register_post_type('scholarships', $args);
     }
 }
+
 
 // Hook into the 'init' action to register our custom post type when WordPress initializes
 add_action('init', 'create_scholarship_post_type');

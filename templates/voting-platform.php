@@ -20,11 +20,11 @@ function scholarship_application_shortcode() {
 
     // Set up the query arguments
     $args = array(
-        'post_type' => 'scholarship-application',
+        'post_type' => 'scholarships',
         'posts_per_page' => -1, // Get all posts
         'tax_query' => array(
             array(
-                'taxonomy' => 'scholarship-year',
+                'taxonomy' => 'scholarship_year',
                 'field' => 'name',
                 'terms' => $current_year
             )
@@ -47,7 +47,7 @@ function scholarship_application_shortcode() {
 
             // Display the form with dynamic painting ID
             ?>
-            <form id="judge-voting-form-<?php echo $painting_id; ?>">
+            <form id="judge-voting-form-<?php echo $painting_id; ?>" class="jury-voting-form">
                 <?php wp_nonce_field('judge_vote_nonce_action', 'judge_vote_nonce'); ?>
 
                 <input type="hidden" name="painting_id" value="<?php echo esc_attr($painting_id); ?>">
