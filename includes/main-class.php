@@ -7,6 +7,10 @@ class WordPress_Plugin_Starter {
 
     public function __construct() {
 
+        include_once(WPS_DIRECTORY_PATH . 'includes/admin/scholarship-meta.php');
+        include_once(WPS_DIRECTORY_PATH . 'templates/voting-platform.php');
+        include_once(WPS_DIRECTORY_PATH . 'templates/scholarship-application.php');
+
         // Plugin uninstall hook
         register_uninstall_hook( WPS_FILE, array('WordPress_Plugin_Starter', 'plugin_uninstall') );
 
@@ -24,8 +28,6 @@ class WordPress_Plugin_Starter {
         add_action('init', 'create_scholarship_post_type');
         add_action('init', 'create_scholarship_taxonomy');
 
-        include_once(WPS_DIRECTORY_PATH . 'admin/scholarship-meta.php');
-        include_once(WPS_DIRECTORY_PATH . 'templates/voting-platform.php');
 
 
 
