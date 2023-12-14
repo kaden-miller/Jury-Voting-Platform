@@ -4,7 +4,11 @@ jQuery(document).ready(function($) {
             url: ajax_object.ajax_url,
             data: { action: 'filter_by_date' },
             success: function(response) {
+                console.log('success');
                 $('#scholarship-applications').html(response);
+            }, 
+            error: function(response) {
+                console.log(response);
             }
         });
     });
@@ -14,7 +18,11 @@ jQuery(document).ready(function($) {
             url: ajax_object.ajax_url,
             data: { action: 'filter_by_score' },
             success: function(response) {
+                console.log('success');
                 $('#scholarship-applications').html(response);
+            },
+            error: function(response) {
+                console.log(response);
             }
         });
     });

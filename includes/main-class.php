@@ -3,7 +3,7 @@
 // Block direct access to file
 defined( 'ABSPATH' ) or die( 'Not Authorized!' );
 
-class WordPress_Plugin_Starter {
+class Jury_Plugin_CP {
 
     public function __construct() {
 
@@ -15,7 +15,7 @@ class WordPress_Plugin_Starter {
 
 
         // Plugin uninstall hook
-        register_uninstall_hook( WPS_FILE, array('WordPress_Plugin_Starter', 'plugin_uninstall') );
+        register_uninstall_hook( WPS_FILE, array('Jury_Plugin_CP', 'plugin_uninstall') );
 
         // Plugin activation/deactivation hooks
         register_activation_hook( WPS_FILE, array($this, 'plugin_activate') );
@@ -80,21 +80,21 @@ class WordPress_Plugin_Starter {
         load_plugin_textDomain( WPS_TEXT_DOMAIN, false, dirname(WPS_DIRECTORY_BASENAME) . '/languages' );
     }
 
-    function plugin_admin_menu_function() {
+    // function plugin_admin_menu_function() {
 
-        //create main top-level menu with empty content
-        add_menu_page( __('WordPress Plugin Starter', WPS_TEXT_DOMAIN), __('Plugin Starter', WPS_TEXT_DOMAIN), 'administrator', 'wps-general', null, 'dashicons-admin-generic', 4 );
+    //     //create main top-level menu with empty content
+    //     add_menu_page( __('WordPress Plugin Starter', WPS_TEXT_DOMAIN), __('Plugin Starter', WPS_TEXT_DOMAIN), 'administrator', 'wps-general', null, 'dashicons-admin-generic', 4 );
 
-        // create top level submenu page which point to main menu page
-        add_submenu_page( 'wps-general', __('General', WPS_TEXT_DOMAIN), __('General', WPS_TEXT_DOMAIN), 'manage_options', 'wps-general', array($this, 'plugin_settings_page') );
+    //     // create top level submenu page which point to main menu page
+    //     add_submenu_page( 'wps-general', __('General', WPS_TEXT_DOMAIN), __('General', WPS_TEXT_DOMAIN), 'manage_options', 'wps-general', array($this, 'plugin_settings_page') );
 
-        // add the support page
-        add_submenu_page( 'wps-general', __('Plugin Support Page', WPS_TEXT_DOMAIN), __('Support', WPS_TEXT_DOMAIN), 'manage_options', 'wps-support', array($this, 'plugin_support_page') );
+    //     // add the support page
+    //     add_submenu_page( 'wps-general', __('Plugin Support Page', WPS_TEXT_DOMAIN), __('Support', WPS_TEXT_DOMAIN), 'manage_options', 'wps-support', array($this, 'plugin_support_page') );
 
-    	//call register settings function
-    	add_action( 'admin_init', array($this, 'plugin_register_settings') );
+    // 	//call register settings function
+    // 	add_action( 'admin_init', array($this, 'plugin_register_settings') );
 
-    }
+    // }
 
     /**
      * Register the main Plugin Settings
@@ -212,4 +212,4 @@ class WordPress_Plugin_Starter {
 
 }
 
-new WordPress_Plugin_Starter;
+new Jury_Plugin_CP;

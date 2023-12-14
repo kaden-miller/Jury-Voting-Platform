@@ -146,20 +146,47 @@ function applicant_info_meta_box_content($post) {
     }
 
     // File upload/image fields
-    // Note: Handling file uploads in WordPress requires additional steps.
     echo '<label for="headshot">Headshot:</label>';
     echo '<input type="hidden" id="headshot" name="headshot" value="' . esc_attr(get_post_meta($post->ID, 'headshot', true)) . '" />';
     echo '<button type="button" onclick="open_media_uploader_image(\'headshot\')">Select Image</button>';
     echo '<br />';
 
     $headshot_url = get_post_meta($post->ID, 'headshot', true);
-    if ($headshot_url) {
-        echo '<img src="' . esc_url($headshot_url) . '" style="max-width:150px;"/><br />';
+    $display_style = $headshot_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
+    echo '<img id="headshot_preview" src="' . esc_url($headshot_url) . '" style="' . $display_style . '"/><br />';
+
+    // Loop through 5 image fields
+    for ($i = 1; $i <= 5; $i++) {
+        // Define field IDs
+        $image_id = 'image_' . $i;
+        $title_id = 'image_' . $i . '_title';
+        $width_id = 'image_' . $i . '_width';
+        $height_id = 'image_' . $i . '_height';
+        $medium_id = 'image_' . $i . '_medium';
+
+        // Display fields for title, width, height, and medium
+        echo '<label for="' . $title_id . '">Image ' . $i . ' Title:</label>';
+        echo '<input type="text" id="' . $title_id . '" name="' . $title_id . '" value="' . esc_attr(get_post_meta($post->ID, $title_id, true)) . '" /><br />';
+        echo '<label for="' . $width_id . '">Width:</label>';
+        echo '<input type="text" id="' . $width_id . '" name="' . $width_id . '" value="' . esc_attr(get_post_meta($post->ID, $width_id, true)) . '" /><br />';
+        echo '<label for="' . $height_id . '">Height:</label>';
+        echo '<input type="text" id="' . $height_id . '" name="' . $height_id . '" value="' . esc_attr(get_post_meta($post->ID, $height_id, true)) . '" /><br />';
+        echo '<label for="' . $medium_id . '">Medium:</label>';
+        echo '<input type="text" id="' . $medium_id . '" name="' . $medium_id . '" value="' . esc_attr(get_post_meta($post->ID, $medium_id, true)) . '" /><br />';
+
+        // File upload/image field
+        echo '<label for="' . $image_id . '">Image ' . $i . ':</label>';
+        echo '<input type="hidden" id="' . $image_id . '" name="' . $image_id . '" value="' . esc_attr(get_post_meta($post->ID, $image_id, true)) . '" />';
+        echo '<button type="button" onclick="open_media_uploader_image(\'' . $image_id . '\')">Select Image</button>';
+        echo '<br />';
+
+        // Display image preview
+        $image_url = get_post_meta($post->ID, $image_id, true);
+        $display_style = $image_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
+        echo '<img id="' . $image_id . '_preview" src="' . esc_url($image_url) . '" style="' . $display_style . '"/><br />';
     }
 
     
-    // Add similar blocks for Image 1 and Image 2 file uploads...
-    // Remember to handle image width, height, medium, and title fields as text fields
 }
 
 function save_applicant_info($post_id) {
@@ -200,6 +227,24 @@ function save_applicant_info($post_id) {
     // Note: You need to handle file uploads in a secure manner. This is just an example.
     if (isset($_POST['headshot'])) {
         update_post_meta($post_id, 'headshot', sanitize_text_field($_POST['headshot']));
+    }
+
+    // Loop through the 5 image sets
+    for ($i = 1; $i <= 5; $i++) {
+        // Define field IDs for each attribute
+        $image_id = 'image_' . $i;
+        $title_id = 'image_' . $i . '_title';
+        $width_id = 'image_' . $i . '_width';
+        $height_id = 'image_' . $i . '_height';
+        $medium_id = 'image_' . $i . '_medium';
+
+        // Update the post meta for each field if it's set
+        $fields_to_save = [$image_id, $title_id, $width_id, $height_id, $medium_id];
+        foreach ($fields_to_save as $field_id) {
+            if (isset($_POST[$field_id])) {
+                update_post_meta($post_id, $field_id, sanitize_text_field($_POST[$field_id]));
+            }
+        }
     }
     
 }
