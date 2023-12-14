@@ -36,7 +36,6 @@ function display_judges_scores($post) {
             echo '<td>' . esc_html($score) . '</td>';
         }
 
-        echo '<td>' . $judge_total_score . '</td>'; // Display judge total score
         echo '</tr>';
     }
 

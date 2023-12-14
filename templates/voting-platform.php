@@ -60,7 +60,7 @@ function scholarship_application_shortcode() {
     echo '<button id="filter-by-date">Filter by Date</button>';
     echo '<button id="filter-by-score">Filter by Score</button>';
 
-    echo '<div id="scholarship-applications">';
+    echo '<div id="scholarship-applications" class="paintingGalleryJuror">';
 
     // The Loop
     if ($the_query->have_posts()) {

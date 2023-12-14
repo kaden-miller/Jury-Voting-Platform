@@ -53,14 +53,16 @@ function recalculate_post_total_score($post_id) {
     $judges_scores = get_judges_scores_for_post($post_id);
     $post_total_score = 0;
 
-    foreach ($judges_scores as $judge_scores) {
-        foreach ($judge_scores as $score) {
-            $post_total_score += intval($score);
-        }
+    foreach ($judges_scores as $judge_id => $scores) {
+        // Fetch the total score meta key for each judge
+        $total_score_meta_key = 'judge_' . $judge_id . '_total_score';
+        $judge_total_score = get_post_meta($post_id, $total_score_meta_key, true);
+        $post_total_score += intval($judge_total_score);
     }
 
     return $post_total_score;
 }
+
 
 
 
