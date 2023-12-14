@@ -99,7 +99,9 @@ function add_applicant_info_meta_box() {
         'normal',                         // Context
         'high'                            // Priority
     );
+    
 }
+
 add_action('add_meta_boxes', 'add_applicant_info_meta_box');
 
 function applicant_info_meta_box_content($post) {
@@ -134,15 +136,27 @@ function applicant_info_meta_box_content($post) {
         'other_activities' => 'Other Activities',
         'artists_statement' => 'Artists Statement',
         'autobiography' => 'Autobiography',
-        // Add more text areas as needed...
     ];
 
 
-    // Output form fields for text areas
+    // Output form fields for text areas with TinyMCE
     foreach ($text_areas as $field => $label) {
         $value = get_post_meta($post->ID, $field, true);
         echo '<label for="' . $field . '">' . $label . ':</label>';
-        echo '<textarea id="' . $field . '" name="' . $field . '">' . esc_textarea($value) . '</textarea><br />';
+        wp_editor(html_entity_decode($value), $field, array(
+            'textarea_name' => $field,
+            'editor_height' => 200 // Adjust height as needed
+        ));
+    }
+
+    // PDF Upload Field
+    echo '<label for="applicant_pdf">Applicant PDF:</label>';
+    echo '<input type="file" id="applicant_pdf" name="applicant_pdf" /><br />';
+
+    // Retrieve existing PDF URL if available
+    $pdf_url = get_post_meta($post->ID, 'applicant_pdf', true);
+    if ($pdf_url) {
+        echo '<a href="' . esc_url($pdf_url) . '">View Uploaded PDF</a><br />';
     }
 
     // File upload/image fields
@@ -165,6 +179,7 @@ function applicant_info_meta_box_content($post) {
         $medium_id = 'image_' . $i . '_medium';
 
         // Display fields for title, width, height, and medium
+        echo '<div class="image-set">';
         echo '<label for="' . $title_id . '">Image ' . $i . ' Title:</label>';
         echo '<input type="text" id="' . $title_id . '" name="' . $title_id . '" value="' . esc_attr(get_post_meta($post->ID, $title_id, true)) . '" /><br />';
         echo '<label for="' . $width_id . '">Width:</label>';
@@ -184,6 +199,8 @@ function applicant_info_meta_box_content($post) {
         $image_url = get_post_meta($post->ID, $image_id, true);
         $display_style = $image_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
         echo '<img id="' . $image_id . '_preview" src="' . esc_url($image_url) . '" style="' . $display_style . '"/><br />';
+        echo '</div>';
+
     }
 
     
@@ -219,9 +236,40 @@ function save_applicant_info($post_id) {
 
     foreach ($fields as $field) {
         if (array_key_exists($field, $_POST)) {
-            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+            update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
         }
     }
+
+
+    // Handle the PDF file upload
+    if (!empty($_FILES['applicant_pdf']['name'])) {
+        require_once(ABSPATH . 'wp-admin/includes/file.php'); // Load WordPress file handling functions
+
+        // Check for upload errors
+        if ($_FILES['applicant_pdf']['error'] === UPLOAD_ERR_OK) {
+            // Set upload overrides
+            $overrides = array(
+                'test_form' => false,
+                'mimes' => array('pdf' => 'application/pdf') // Restrict to PDFs
+            );
+
+            // Handle the file upload
+            $uploaded_file = wp_handle_upload($_FILES['applicant_pdf'], $overrides);
+
+            if (!isset($uploaded_file['error'])) {
+                // File is uploaded successfully, now save the file URL in post meta
+                $file_url = $uploaded_file['url'];
+                update_post_meta($post_id, 'applicant_pdf', $file_url);
+            } else {
+                // Handle errors
+                wp_die('File upload error: ' . $uploaded_file['error']);
+            }
+        } else {
+            // Handle upload errors
+            wp_die('Upload error code: ' . $_FILES['applicant_pdf']['error']);
+        }
+    }
+
 
     // Handle file upload fields separately
     // Note: You need to handle file uploads in a secure manner. This is just an example.

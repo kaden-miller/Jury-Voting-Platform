@@ -20,3 +20,11 @@ function open_media_uploader_image(field_id){
 
     media_uploader.open();
 }
+
+
+
+
+jQuery(document).ready(function(){
+    jQuery('.post-type-scholarships #post').attr('enctype', 'multipart/form-data');
+    jQuery('post-type-scholarships #post').attr('encoding', 'multipart/form-data');
+});

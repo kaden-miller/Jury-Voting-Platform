@@ -67,7 +67,7 @@ function openModal1() {
 
 
   jQuery(document).ready(function($) {
-    $('.painting-gallery-container .image-meta-block img').click(function() {
+    $(document).on('click', '.painting-gallery-container .image-meta-block img', function() {
         var imgSrc = $(this).attr('src');
         var title = $(this).data('title');
         var width = $(this).data('width');
@@ -75,7 +75,11 @@ function openModal1() {
         var medium = $(this).data('medium');
 
         $(this).closest('.mySlides1').find('.applicant-info-container').css('display', 'none')
+        $(this).closest('.mySlides1').find('.show-voting-information').css('display', 'none')
+        $(this).closest('.mySlides1').find('.formInputs').css('display', 'none')
         $(this).closest('.mySlides1').find('.painting-info-container').css('display', 'block')
+        $(this).closest('.mySlides1').find('.show-applicant-information').css('display', 'block')
+
   
         // Update the painting information container
         $(this).closest('.painting-gallery-container').siblings('.left-container-main').attr('src', imgSrc);
@@ -83,16 +87,34 @@ function openModal1() {
         $(this).closest('.mySlides1').find('.painting-info-container .pnt-dimen').text('Dimensions: ' + width + ' x ' + height);
         $(this).closest('.mySlides1').find('.painting-info-container .pnt-medm').text('Medium: ' + medium);
     });
-    $('.show-applicant-information').click(function() {
+    $(document).on('click', '.show-applicant-information', function() {
       var headshotUrl = $(this).data('headshot-url'); // Get the headshot URL from the data attribute
 
+      $(this).css('display', 'none');
+      $(this).siblings('.show-voting-information').css('display', 'block');
       // Reset the image src to the headshot URL
       $(this).closest('.mySlides1').find('.left-container-main').attr('src', headshotUrl);
 
-      $(this).siblings('.applicant-info-container').css('display', 'block')
-      $(this).siblings('.painting-info-container').css('display', 'none')
+      $(this).closest('.entry-content').siblings('.applicant-info-container').css('display', 'block')
+      $(this).closest('.entry-content').siblings('.painting-info-container').css('display', 'none')
+      $(this).closest('.entry-content').find('.formInputs').css('display', 'none')
+
     });
+
+    $(document).on('click', '.show-voting-information', function() {
+
+      $(this).css('display', 'none');
+      $(this).siblings('.show-applicant-information').css('display', 'block');
+
+      $(this).closest('.button-action-wrapper').siblings('.formInputs').css('display', 'block')
+      $(this).closest('.modalRightCol').find('.applicant-info-container').css('display', 'none')
+      $(this).closest('.modalRightCol').find('.painting-info-container').css('display', 'none')
+
+
+  });
 });
+
+
 
 
 jQuery(document).ready(function($) {
@@ -119,4 +141,46 @@ jQuery(document).ready(function($) {
           }
       });
   });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  const accordionContainer = document.querySelector('#myModal1'); // Replace with your accordion container's selector
+
+  function closeAllAccordions() {
+      document.querySelectorAll('.accordion-button').forEach(button => {
+          button.classList.remove('active');
+          button.nextElementSibling.style.display = 'none';
+      });
+  }
+
+  if (accordionContainer) {
+      accordionContainer.addEventListener('click', function(event) {
+          const target = event.target;
+
+          if (target && target.classList.contains('accordion-button')) {
+              // Close all accordions before toggling the current one
+              if (!target.classList.contains('active')) {
+                  closeAllAccordions();
+              } 
+
+
+              target.classList.toggle('active');
+              const content = target.nextElementSibling;
+              if (content.style.display === "block") {
+                  content.style.display = "none";
+              } else {
+                  content.style.display = "block";
+              }
+          }
+      });
+  }
+
+  // Open the first accordion section by default
+  const firstAccordionButton = accordionContainer.querySelector('.accordion-button');
+  if (firstAccordionButton) {
+      firstAccordionButton.classList.add('active');
+      firstAccordionButton.nextElementSibling.style.display = 'block';
+  }
 });

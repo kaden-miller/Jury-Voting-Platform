@@ -5,13 +5,12 @@
 		cursor: pointer;
 	}
 	/* Judge Form Styling */
-	.judgeForm, .judgeForm1 {
-    display: flex;
-    flex-wrap: wrap;
-    height: 100%;
-    justify-content: center;
-    align-content: space-between;
-    min-height: unset;
+	.scholarship-modal .judgeForm {
+		display: flex;
+		flex-wrap: wrap;
+		height: 100%;
+		justify-content: center;
+		min-height: unset;
 	}
 
 	.judgeForm .formInputs, .judgeForm1 .formInputs {
@@ -109,7 +108,7 @@
 
 
 	
-	.judgeSubmit {
+	input[type="submit"] {
 background-color: #131335;
     border-radius: 5px;
     color: white;
@@ -121,25 +120,19 @@ background-color: #131335;
 	width: 100%;
 	cursor: pointer;
 	border: 0;
+	}
+
+	input[type="submit"]:hover,
+	input[type="submit"]:focus,
+	input[type="submit"]:focus-visible,
+	input[type="submit"]:active {
+		background-color: #2d2d51;
 	}
 	
 	.judgeSubmit.success {
 		background: green;
 	}
 
-	.judgeSubmit1 {
-background-color: #131335;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
-    text-transform: uppercase;
-    padding: 10px;
-    margin-top: 10px;
-	width: 100%;
-	cursor: pointer;
-	border: 0;
-	}
 	
 	.judgeSubmit1.success {
 		background: green;
@@ -155,10 +148,13 @@ background-color: #131335;
     height: 35px;
 }
 
-.jurorEntryCol {
+#scholarship-applications .jurorEntryCol {
 	    background-size: cover;
     background-position: center;
 		    position: relative;
+			width: 100%;
+			height: auto;
+			aspect-ratio: 1;
 	}
 .jurorEntryCol.Accept .imageMarkerAccepted {
     display: block;
@@ -364,8 +360,7 @@ header .et_builder_inner_content {
     }
 
     /* The Modal (background) */
-    .modalJuror,
-	.modalJuror1 {
+    .modalJuror {
       display: none;
       position: fixed;
       z-index: 999999999999;
@@ -382,7 +377,7 @@ header .et_builder_inner_content {
 }      
 
     /* Modal Content */
-    .modal-content {
+    .scholarship-modal {
       position: relative;
       background-color: #fefefe;
       margin: auto;
@@ -390,14 +385,14 @@ header .et_builder_inner_content {
       width: 100%;
       max-width: 1440px;
 	  max-height: 90vh;
-/* 		height: 95vh;       */
+	  height: 95vh;      
 	  display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
     /* The Close Button */
-    .close.closeModal, .close.closeModal1 {
+    .scholarship-modal .close.closeModal, .scholarship-modal .close.closeModal1 {
 		color: #fff;
 		position: absolute;
 		top: 15px;
@@ -413,6 +408,7 @@ header .et_builder_inner_content {
 		align-items: center;
 		line-height: 0;
 		border-radius: 50%;
+		padding-bottom: 5px;
     }
 
     .close:hover,
@@ -434,11 +430,13 @@ header .et_builder_inner_content {
 		height: 100%;
     }
 	
-	.modalLeftCol {
-		width: 70%;
+	.scholarship-modal .modalLeftCol {
+		width: 65%;
 		height: 100%;
-		padding-left: 30px;
-		padding-right: 30px;
+		padding: 30px;
+		max-height: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 	
 	.modalLeftCol img {
@@ -447,8 +445,8 @@ header .et_builder_inner_content {
     object-fit: contain;
 		height: 100%;
 	}
-	.modalRightCol {
-		    width: 30%;
+	.scholarship-modal .modalRightCol {
+		    width: 35%;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -590,3 +588,129 @@ header .et_builder_inner_content {
 		font-size: 18px;
 	}
 		
+
+
+	.accordion .accordion-content {
+		display: none;
+		padding: 15px;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	
+	.accordion .accordion-button {
+		background-color: #eee;
+		color: #444;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		text-align: left;
+		border: none;
+		outline: none;
+		transition: background-color 0.3s ease;
+	}
+	
+	.accordion .accordion-button:hover {
+		background-color: #ccc;
+	}
+	
+	.accordion .accordion-button.active + .accordion-content {
+		display: block;
+	}
+
+	.filter-buttons-wrapper {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		gap: 20px;
+		margin-bottom: 30px;
+	}
+
+	.filter-buttons-wrapper button{
+		color: #fff;
+		width: 100%;
+		text-align: center;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		font-size: 20px;
+		border-radius: 16px;
+		border: 1px solid #D0D0D0;
+		background-color: #AF5F63;
+	}
+	
+	.painting-gallery-container {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 10px;
+		margin-top: 30px;
+	}
+
+	.scholarship-modal .painting-gallery-container img {
+		cursor: pointer;
+		aspect-ratio: 1;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	#scholarship-applications .paintingGalleryItemJuror {
+		position: relative;
+		border-radius: 16px;
+		overflow: hidden;
+	}
+	#scholarship-applications .paintingGalleryItemJuror p {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		background-color: #32737F;
+		z-index: 9;
+		padding: 6px 12px;
+		line-height: 1;
+		border-radius: 6px;
+		color: #fff;
+		font-weight: 700;
+	}
+
+	.formInputs {
+		margin-bottom: 20px;
+	}
+
+	.show-applicant-information,
+	.show-voting-information {
+		width: 100%;
+		text-align: center;
+		background-color: #32737F;
+		cursor: pointer;
+		border-radius: 6px;
+		font-weight: bold;
+		color: #fff;
+		padding: 8px 20px;
+		margin-bottom: 10px;
+		text-transform: uppercase;
+	}
+
+	.favorite-button{
+		width: 100%;
+		text-align: center;
+		background-color: #AF5F63;
+		cursor: pointer;
+		border-radius: 6px;
+		font-weight: bold;
+		color: #fff;
+		padding: 8px 20px;
+		text-transform: uppercase;
+	}
+
+	.formInputs .inputWrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.button-action-wrapper {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
