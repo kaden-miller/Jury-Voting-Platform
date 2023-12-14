@@ -8,6 +8,7 @@ function display_scholarship_application($painting_id) {
     $current_judge_id = get_current_user_id();
     $judge_scores = get_judge_scores_for_painting($painting_id, $current_judge_id);
 
+    
     // Output the title
     echo '<h3>' . get_the_title($painting_id) . '</h3>';
 
