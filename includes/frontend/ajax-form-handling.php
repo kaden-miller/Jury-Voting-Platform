@@ -68,3 +68,33 @@ function recalculate_post_total_score($post_id) {
 
 add_action('wp_ajax_handle_judge_voting', 'handle_judge_voting'); // If logged in
 add_action('wp_ajax_nopriv_handle_judge_voting', 'handle_judge_voting'); // If not logged in
+
+
+
+function toggle_favorite() {
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    $favorite = isset($_POST['favorite']) ? filter_var($_POST['favorite'], FILTER_VALIDATE_BOOLEAN) : false;
+    $judge_id = get_current_user_id();
+
+    if ($post_id && $judge_id) {
+        $favorite_meta_key = 'judge_' . $judge_id . '_favorite';
+
+        if ($favorite) {
+            // Update the meta field to '1' when favorited
+            update_post_meta($post_id, $favorite_meta_key, '1');
+        } else {
+            // Update the meta field to '0' or delete it when unfavorited
+            update_post_meta($post_id, $favorite_meta_key, '0');
+            // Alternatively, you can delete the field entirely using delete_post_meta
+            // delete_post_meta($post_id, $favorite_meta_key);
+        }
+
+        wp_send_json_success(array(
+            'is_favorite' => $favorite,
+            'button_text' => $favorite ? 'Unfavorite' : 'Favorite'
+        ));
+    } else {
+        wp_send_json_error();
+    }
+}
+add_action('wp_ajax_toggle_favorite', 'toggle_favorite');

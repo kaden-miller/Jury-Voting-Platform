@@ -74,10 +74,49 @@ function openModal1() {
         var height = $(this).data('height');
         var medium = $(this).data('medium');
 
+        $(this).closest('.mySlides1').find('.applicant-info-container').css('display', 'none')
+        $(this).closest('.mySlides1').find('.painting-info-container').css('display', 'block')
+  
         // Update the painting information container
-        $('.painting-information-container img').attr('src', imgSrc);
-        $('.painting-information-container').find('p').eq(0).text('Painting Title: ' + title);
-        $('.painting-information-container').find('p').eq(1).text('Dimensions: ' + width + ' x ' + height);
-        $('.painting-information-container').find('p').eq(2).text('Medium: ' + medium);
+        $(this).closest('.painting-gallery-container').siblings('.left-container-main').attr('src', imgSrc);
+        $(this).closest('.mySlides1').find('.painting-info-container .pnt-title').text('Painting Title: ' + title);
+        $(this).closest('.mySlides1').find('.painting-info-container .pnt-dimen').text('Dimensions: ' + width + ' x ' + height);
+        $(this).closest('.mySlides1').find('.painting-info-container .pnt-medm').text('Medium: ' + medium);
     });
+    $('.show-applicant-information').click(function() {
+      var headshotUrl = $(this).data('headshot-url'); // Get the headshot URL from the data attribute
+
+      // Reset the image src to the headshot URL
+      $(this).closest('.mySlides1').find('.left-container-main').attr('src', headshotUrl);
+
+      $(this).siblings('.applicant-info-container').css('display', 'block')
+      $(this).siblings('.painting-info-container').css('display', 'none')
+    });
+});
+
+
+jQuery(document).ready(function($) {
+  // Attach the click event to a static parent element
+  // Delegating it to the favorite buttons
+  $(document).on('click', '.favorite-button', function() {
+      var button = $(this);
+      var postId = button.data('post-id');
+      var isFavorite = button.attr('aria-pressed') === 'true';
+
+      $.ajax({
+          type: 'POST',
+          url: ajax_object.ajax_url,
+          data: {
+              action: 'toggle_favorite',
+              post_id: postId,
+              favorite: !isFavorite
+          },
+          success: function(response) {
+              if (response.success) {
+                  button.text(response.data.button_text);
+                  button.attr('aria-pressed', response.data.is_favorite);
+              }
+          }
+      });
+  });
 });

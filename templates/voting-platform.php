@@ -75,7 +75,7 @@ function display_scholarship_modal($painting_id) {
 
 <div class="mySlides1">
           <div class="modalLeftCol">
-             <img src="<?php echo $url ?>" style="width: 100%" />
+             <img src="<?php echo $url ?>" style="width: 100%" class="left-container-main" />
                 <div class="painting-gallery-container">
                     <?php
                         // Loop through the 5 image sets
@@ -96,50 +96,62 @@ function display_scholarship_modal($painting_id) {
                         }
                     ?>
                 </div>
-                <div class="painting-information-container">
-                        <img src="Painting url" style="width: 100%" />
-                        <p>Painting Title: </p>
-                        <p>Painting width x Painting height</p>
-                        <p>Medium: </p>
-                </div>
+
           </div>
           <div class="modalRightCol">
-        <h2 class="jurorFormHeaders">Applicant Info</h2>
 
-        <div class="textFields">
-            <h4>First Name:</h4>
-            <p><?php echo esc_attr($fp_author_fn1); ?></p>
+        <?php
+        $is_favorite = get_post_meta(get_the_ID(), 'judge_' . get_current_user_id() . '_favorite', true);
+        ?>
+        <button class="favorite-button" data-post-id="<?php echo get_the_ID(); ?>" aria-pressed="<?php echo $is_favorite ? 'true' : 'false'; ?>">
+            <?php echo $is_favorite ? 'Unfavorite' : 'Favorite'; ?>
+        </button>
+  
 
-            <h4>Last Name:</h4>
-            <p><?php echo esc_attr($fp_author_ln1); ?></p>
+          <div class="show-applicant-information" data-headshot-url="<?php echo esc_url($url); ?>">View Applicant's Headshot</div>
 
-            <h4>City:</h4>
-            <p><?php echo esc_attr($fp_author_city1); ?></p>
-
-            <h4>State:</h4>
-            <p><?php echo esc_attr($fp_author_state1); ?></p>
-
-            <h4>Country:</h4>
-            <p><?php echo esc_attr($fp_author_country1); ?></p>
-
-            <h4>Phone:</h4>
-            <p><?php echo esc_attr($fp_author_phone1); ?></p>
-
-            <h4>Email:</h4>
-            <p><?php echo esc_attr($fp_author_email1); ?></p>
-
-            <h4>Website:</h4>
-            <p><?php echo esc_attr($fp_author_website1); ?></p>
-
-            <h4>Age:</h4>
-            <p><?php echo esc_attr($fp_author_age1); ?></p>
-
-            <h4>College:</h4>
-            <p><?php echo esc_attr($fp_author_college1); ?></p>
-        </div>
+            <div class="applicant-info-container">
+                <h2 class="jurorFormHeaders">Applicant Info</h2>
 
 
-          
+                <div class="textFields">
+                    <h4>First Name:</h4>
+                    <p><?php echo esc_attr($fp_author_fn1); ?></p>
+
+                    <h4>Last Name:</h4>
+                    <p><?php echo esc_attr($fp_author_ln1); ?></p>
+
+                    <h4>City:</h4>
+                    <p><?php echo esc_attr($fp_author_city1); ?></p>
+
+                    <h4>State:</h4>
+                    <p><?php echo esc_attr($fp_author_state1); ?></p>
+
+                    <h4>Country:</h4>
+                    <p><?php echo esc_attr($fp_author_country1); ?></p>
+
+                    <h4>Phone:</h4>
+                    <p><?php echo esc_attr($fp_author_phone1); ?></p>
+
+                    <h4>Email:</h4>
+                    <p><?php echo esc_attr($fp_author_email1); ?></p>
+
+                    <h4>Website:</h4>
+                    <p><?php echo esc_attr($fp_author_website1); ?></p>
+
+                    <h4>Age:</h4>
+                    <p><?php echo esc_attr($fp_author_age1); ?></p>
+
+                    <h4>College:</h4>
+                    <p><?php echo esc_attr($fp_author_college1); ?></p>
+                </div>
+            </div>
+
+            <div class="painting-info-container" style="display: none;">
+                <p class="pnt-title">Painting Title: </p>
+                <p class="pnt-dimen">Painting width x Painting height</p>
+                <p class="pnt-medm">Medium: </p>
+            </div>
 
           <div class="entry-content">
 
@@ -237,6 +249,7 @@ function scholarship_application_shortcode() {
     // Output the HTML
     echo '<button id="filter-by-date">Filter by Date</button>';
     echo '<button id="filter-by-score">Filter by Score</button>';
+    echo '<button id="filter-by-favorite">Filter by Favorite</button>';
     echo '<div id="scholarship-applications" class="paintingGalleryJuror">' . $galleryContent . '</div>';
     echo '<div id="myModal1" class="modalJuror1">';
     echo '<div class="modal-content">';
@@ -276,17 +289,36 @@ function filter_scholarships_by_date() {
 
     $scholarships_query = new WP_Query($args);
 
+    $gridContent = '';
+    $modalContent = '';
+
     if ($scholarships_query->have_posts()) {
         while ($scholarships_query->have_posts()) {
             $scholarships_query->the_post();
-            display_scholarship_grid(get_the_ID());
 
+            // Buffering for grid content
+            ob_start();
+            display_scholarship_grid(get_the_ID());
+            $gridContent .= ob_get_clean();
+
+            // Buffering for modal content, wrapped in divs
+            ob_start();
+            echo '<div class="modal-content">';
+            echo '<span class="close cursor closeModal1" onclick="closeModal1()">×</span>';
+            display_scholarship_modal(get_the_ID());
+            echo '</div>';
+            $modalContent .= ob_get_clean();
         }
     } else {
-        echo 'No scholarship applications found.';
+        $gridContent = 'No scholarship applications found.';
+        $modalContent = $gridContent;
     }
 
-    wp_reset_postdata(); // Reset post data
+    wp_reset_postdata();
+
+    // Return both grid and modal content
+    wp_send_json(array('gridContent' => $gridContent, 'modalContent' => $modalContent));
+
     wp_die();
 }
 
@@ -302,17 +334,90 @@ function filter_scholarships_by_score() {
 
     $scholarships_query = new WP_Query($args);
 
+    $gridContent = '';
+    $modalContent = '';
+
     if ($scholarships_query->have_posts()) {
         while ($scholarships_query->have_posts()) {
             $scholarships_query->the_post();
-            display_scholarship_grid(get_the_ID());
 
+            // Buffering for grid content
+            ob_start();
+            display_scholarship_grid(get_the_ID());
+            $gridContent .= ob_get_clean();
+
+            // Buffering for modal content, wrapped in divs
+            ob_start();
+            echo '<div class="modal-content">';
+            echo '<span class="close cursor closeModal1" onclick="closeModal1()">×</span>';
+            display_scholarship_modal(get_the_ID());
+            echo '</div>';
+            $modalContent .= ob_get_clean();
         }
     } else {
-        echo 'No scholarship applications found.';
+        $gridContent = 'No scholarship applications found.';
+        $modalContent = $gridContent;
     }
 
     wp_reset_postdata();
+
+    // Return both grid and modal content
+    wp_send_json(array('gridContent' => $gridContent, 'modalContent' => $modalContent));
+
+    wp_die();
+}
+
+function filter_scholarships_by_favorite() {
+    $judge_id = get_current_user_id(); // Get the current user ID
+    $favorite_meta_key = 'judge_' . $judge_id . '_favorite';
+
+    $args = array(
+        'post_type' => 'scholarships',
+        'posts_per_page' => -1,
+        'meta_query' => array(
+            array(
+                'key' => $favorite_meta_key,
+                'value' => '1', // Assuming '1' is how you store a favorite
+                'compare' => '='
+            )
+        ),
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC',
+        'meta_key' => 'post_total_score' // Keep this if you still want to sort by score
+    );
+
+    $scholarships_query = new WP_Query($args);
+
+    $gridContent = '';
+    $modalContent = '';
+
+    if ($scholarships_query->have_posts()) {
+        while ($scholarships_query->have_posts()) {
+            $scholarships_query->the_post();
+
+            // Buffering for grid content
+            ob_start();
+            display_scholarship_grid(get_the_ID());
+            $gridContent .= ob_get_clean();
+
+            // Buffering for modal content, wrapped in divs
+            ob_start();
+            echo '<div class="modal-content">';
+            echo '<span class="close cursor closeModal1" onclick="closeModal1()">×</span>';
+            display_scholarship_modal(get_the_ID());
+            echo '</div>';
+            $modalContent .= ob_get_clean();
+        }
+    } else {
+        $gridContent = 'No scholarship applications found.';
+        $modalContent = $gridContent;
+    }
+
+    wp_reset_postdata();
+
+    // Return both grid and modal content
+    wp_send_json(array('gridContent' => $gridContent, 'modalContent' => $modalContent));
+
     wp_die();
 }
 
@@ -323,3 +428,6 @@ add_action('wp_ajax_nopriv_filter_by_date', 'filter_scholarships_by_date');
 
 add_action('wp_ajax_filter_by_score', 'filter_scholarships_by_score');
 add_action('wp_ajax_nopriv_filter_by_score', 'filter_scholarships_by_score');
+
+add_action('wp_ajax_filter_by_favorite', 'filter_scholarships_by_favorite');
+add_action('wp_ajax_nopriv_filter_by_favorite', 'filter_scholarships_by_favorite');
