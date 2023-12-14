@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
 
             $.ajax({
                 type: 'POST',
-                url: ajaxurl,
+                url: ajax_object.ajax_url,
                 data: formData,
                 success: function(response) {
                     console.log(response);

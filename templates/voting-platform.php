@@ -3,11 +3,7 @@
 // Block direct access to file
 defined( 'ABSPATH' ) or die( 'Not Authorized!' );
 
-function enqueue_my_ajax_script() {
-    wp_enqueue_script('my-ajax-handle', WPS_DIRECTORY_URL . '/files/js/ajax-filter.js', array('jquery'));
-    wp_localize_script('my-ajax-handle', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
-}
-add_action('wp_enqueue_scripts', 'enqueue_my_ajax_script');
+
 
 
 function scholarship_application_shortcode() {
@@ -33,6 +29,11 @@ function scholarship_application_shortcode() {
     // The Query
     $the_query = new WP_Query($args);
 
+    echo '<button id="filter-by-date">Filter by Date</button>';
+    echo '<button id="filter-by-score">Filter by Score</button>';
+
+    echo '<div id="scholarship-applications"></div>';
+
     // The Loop
     if ($the_query->have_posts()) {
         while ($the_query->have_posts()) {
@@ -49,10 +50,7 @@ function scholarship_application_shortcode() {
 
             // ... shortcode content ...
 
-            echo '<button id="filter-by-date">Filter by Date</button>';
-            echo '<button id="filter-by-score">Filter by Score</button>';
 
-            echo '<div id="scholarship-applications"></div>';
 
 
             // Display the title
@@ -111,14 +109,59 @@ function get_judge_scores_for_painting($post_id, $judge_id) {
 
 
 function filter_scholarships_by_date() {
-    // Your code to filter scholarships by date
+    $args = array(
+        'post_type' => 'scholarships',
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order' => 'DESC' // Newest first
+    );
+
+    $scholarships_query = new WP_Query($args);
+
+    if ($scholarships_query->have_posts()) {
+        while ($scholarships_query->have_posts()) {
+            $scholarships_query->the_post();
+            // Output your post here - for example, the title
+            echo '<h3>' . get_the_title() . '</h3>';
+            // You can include other post data here
+        }
+    } else {
+        echo 'No scholarship applications found.';
+    }
+
+    wp_reset_postdata(); // Reset post data
     wp_die();
 }
 
+
 function filter_scholarships_by_score() {
-    // Your code to filter scholarships by total score
+    $args = array(
+        'post_type' => 'scholarships',
+        'posts_per_page' => -1,
+        'meta_key' => 'post_total_score',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC'
+    );
+
+    $scholarships_query = new WP_Query($args);
+
+    if ($scholarships_query->have_posts()) {
+        while ($scholarships_query->have_posts()) {
+            $scholarships_query->the_post();
+
+            // Output your post here - for example, the title and total score
+            echo '<h3>' . get_the_title() . '</h3>';
+            echo '<p>Total Score: ' . get_post_meta(get_the_ID(), 'post_total_score', true) . '</p>';
+        }
+    } else {
+        echo 'No scholarship applications found.';
+    }
+
+    wp_reset_postdata();
     wp_die();
 }
+
+
 
 add_action('wp_ajax_filter_by_date', 'filter_scholarships_by_date');
 add_action('wp_ajax_nopriv_filter_by_date', 'filter_scholarships_by_date');
