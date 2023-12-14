@@ -4,6 +4,34 @@
 defined( 'ABSPATH' ) or die( 'Not Authorized!' );
 
 
+function display_scholarship_application($painting_id) {
+    $current_judge_id = get_current_user_id();
+    $judge_scores = get_judge_scores_for_painting($painting_id, $current_judge_id);
+
+    // Output the title
+    echo '<h3>' . get_the_title($painting_id) . '</h3>';
+
+    // Display the form with dynamic painting ID
+    ?>
+    <form id="judge-voting-form-<?php echo $painting_id; ?>" class="jury-voting-form">
+    <?php wp_nonce_field('judge_vote_nonce_action', 'judge_vote_nonce'); ?>
+        <input type="hidden" name="painting_id" value="<?php echo esc_attr($painting_id); ?>">
+
+        <label for="creativity-<?php echo $painting_id; ?>">Creativity:</label>
+        <input type="number" id="creativity-<?php echo $painting_id; ?>" name="creativity" value="<?php echo esc_attr($judge_scores['creativity']); ?>" min="0" max="10">
+
+        <label for="color_use-<?php echo $painting_id; ?>">Use of Color:</label>
+        <input type="number" id="color_use-<?php echo $painting_id; ?>" name="color_use" value="<?php echo esc_attr($judge_scores['color_use']); ?>" min="0" max="10">
+
+        <label for="originality-<?php echo $painting_id; ?>">Originality:</label>
+        <input type="number" id="originality-<?php echo $painting_id; ?>" name="originality" value="<?php echo esc_attr($judge_scores['originality']); ?>" min="0" max="10">
+
+        <!-- More fields as needed... -->
+        <input type="submit" value="Submit Vote">
+    </form>
+    <?php
+}
+
 
 
 function scholarship_application_shortcode() {
@@ -32,55 +60,22 @@ function scholarship_application_shortcode() {
     echo '<button id="filter-by-date">Filter by Date</button>';
     echo '<button id="filter-by-score">Filter by Score</button>';
 
-    echo '<div id="scholarship-applications"></div>';
+    echo '<div id="scholarship-applications">';
 
     // The Loop
     if ($the_query->have_posts()) {
         while ($the_query->have_posts()) {
             $the_query->the_post();
 
-            // Get the current post ID
-            $painting_id = get_the_ID();
+            display_scholarship_application(get_the_ID());
 
-            // Get current judge ID
-            $current_judge_id = get_current_user_id();
-
-            // Get scores for the current judge and painting
-            $judge_scores = get_judge_scores_for_painting($painting_id, $current_judge_id);
-
-            // ... shortcode content ...
-
-
-
-
-            // Display the title
-            echo '<h3>' . get_the_title() . '</h3>';
-
-            // Display the form with dynamic painting ID
-            ?>
-            <form id="judge-voting-form-<?php echo $painting_id; ?>" class="jury-voting-form">
-                <?php wp_nonce_field('judge_vote_nonce_action', 'judge_vote_nonce'); ?>
-                <input type="hidden" name="painting_id" value="<?php echo esc_attr($painting_id); ?>">
-
-                <label for="creativity-<?php echo $painting_id; ?>">Creativity:</label>
-                <input type="number" id="creativity-<?php echo $painting_id; ?>" name="creativity" value="<?php echo esc_attr($judge_scores['creativity']); ?>" min="0" max="10">
-
-                <label for="color_use-<?php echo $painting_id; ?>">Use of Color:</label>
-                <input type="number" id="color_use-<?php echo $painting_id; ?>" name="color_use" value="<?php echo esc_attr($judge_scores['color_use']); ?>" min="0" max="10">
-
-                <label for="originality-<?php echo $painting_id; ?>">Originality:</label>
-                <input type="number" id="originality-<?php echo $painting_id; ?>" name="originality" value="<?php echo esc_attr($judge_scores['originality']); ?>" min="0" max="10">
-
-                <!-- More fields as needed... -->
-                <input type="submit" value="Submit Vote">
-            </form>
-
-            <?php
         }
     } else {
         // No posts found
         echo 'No scholarship applications found for the current year.';
     }
+
+    echo '</div>';
 
     // Restore original Post Data
     wp_reset_postdata();
@@ -121,9 +116,8 @@ function filter_scholarships_by_date() {
     if ($scholarships_query->have_posts()) {
         while ($scholarships_query->have_posts()) {
             $scholarships_query->the_post();
-            // Output your post here - for example, the title
-            echo '<h3>' . get_the_title() . '</h3>';
-            // You can include other post data here
+            display_scholarship_application(get_the_ID());
+
         }
     } else {
         echo 'No scholarship applications found.';
@@ -148,9 +142,8 @@ function filter_scholarships_by_score() {
     if ($scholarships_query->have_posts()) {
         while ($scholarships_query->have_posts()) {
             $scholarships_query->the_post();
+            display_scholarship_application(get_the_ID());
 
-            // Output your post here - for example, the title and total score
-            echo '<h3>' . get_the_title() . '</h3>';
             echo '<p>Total Score: ' . get_post_meta(get_the_ID(), 'post_total_score', true) . '</p>';
         }
     } else {

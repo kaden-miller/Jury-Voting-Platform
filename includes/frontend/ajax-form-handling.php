@@ -50,13 +50,16 @@ function handle_judge_voting() {
 }
 
 function recalculate_post_total_score($post_id) {
-    // Aggregate scores from all judges
-    // This needs to be implemented based on how you store and calculate the total score
-    $total_score = 0;
-    // Example: Loop through all judges' scores and add them up
-    // $total_score += ... 
+    $judges_scores = get_judges_scores_for_post($post_id);
+    $post_total_score = 0;
 
-    return $total_score;
+    foreach ($judges_scores as $judge_scores) {
+        foreach ($judge_scores as $score) {
+            $post_total_score += intval($score);
+        }
+    }
+
+    return $post_total_score;
 }
 
 

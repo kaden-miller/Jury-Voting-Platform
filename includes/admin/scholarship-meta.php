@@ -25,8 +25,6 @@ function display_judges_scores($post) {
     echo '<thead><tr><th>Judge</th><th>Creativity</th><th>Use of Color</th><th>Originality</th><th>Judge Total Score</th></tr></thead>';
     echo '<tbody>';
 
-    $post_total_score = 0; // Initialize total score for the post
-
     foreach ($judges_scores as $judge_id => $scores) {
         $judge_total_score = 0; // Initialize total score for each judge
 
@@ -38,15 +36,15 @@ function display_judges_scores($post) {
             echo '<td>' . esc_html($score) . '</td>';
         }
 
-        $post_total_score += $judge_total_score; // Add judge total to post total
         echo '<td>' . $judge_total_score . '</td>'; // Display judge total score
         echo '</tr>';
     }
 
     echo '</tbody></table>';
 
-    // Display the total score for the post
-    echo '<p><strong>Total Score for This Application: ' . $post_total_score . '</strong></p>';
+    // Fetch and display the total score for the post using get_post_meta
+    $post_total_score = get_post_meta($post->ID, 'post_total_score', true);
+    echo '<p><strong>Total Score for This Application: ' . esc_html($post_total_score) . '</strong></p>';
 }
 
 

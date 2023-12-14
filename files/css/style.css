@@ -1,0 +1,328 @@
+
+	.jurorEntryCol:hover,
+	.judgeInputWrapper,
+	.jurorFilterWrapper {
+		cursor: pointer;
+	}
+	/* Judge Form Styling */
+	.judgeForm, .judgeForm1 {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: center;
+    align-content: space-between;
+    min-height: unset;
+	}
+
+	.judgeForm .formInputs, .judgeForm1 .formInputs {
+		width: 100%;
+	}
+	h6.jurorFormHeaders {
+    font-size: 16px;
+    font-weight: normal;
+	}
+	.inputLabel {
+		    width: 100%;
+	}
+	
+	.judgeInput {
+		    width: 100%;
+	}
+	
+	.judgeInput.inputAward,
+	.judgeInput.alternateNumber {
+		    margin: 8px 0;
+		padding: 12px;
+		border-radius: 4px;
+    font-size: 16px;
+	}
+	
+	.judgeInput.alternateNumber {
+		    margin-bottom: 16px;
+	}
+	
+	/* Make Checkboxes into Buttons */
+.formInputs > .judgeInputWrapper:nth-of-type(1) {
+  margin-top: 0!important;
+}
+
+.judgeInputWrapper {
+    margin: 14px 0;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:auto;
+    width: 100%;
+	cursor: pointer;
+}
+
+.judgeInputWrapper label {
+    width:100%;
+}
+
+.judgeInputWrapper label span {
+    text-align:center;
+    padding:3px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.judgeInputWrapper label input {
+    position:absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.judgeInputWrapper input.inputAccepted:checked + span {
+    background-color: #007581;
+    color:#fff;
+}
+
+.judgeInputWrapper input.inputAccepted:checked + span::after {
+		content: "selected";
+		font-size: 12px;
+		padding-left: 10px;
+	} 
+	
+	.judgeInputWrapper input.inputRejected:checked + span {
+    background-color: #c25d82;
+    color:#fff;
+}
+
+.judgeInputWrapper input.inputRejected:checked + span::after {
+		content: "selected";
+		font-size: 12px;
+		padding-left: 10px;
+	} 
+	
+	.judgeInputWrapper input.inputAlternate:checked + span {
+    background-color: #8f7cc9;
+    color:#fff;
+}
+
+.judgeInputWrapper input.inputAlternate:checked + span::after {
+		content: "selected";
+		font-size: 12px;
+		padding-left: 10px;
+	} 
+
+
+	
+	.judgeSubmit {
+background-color: #131335;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding: 10px;
+    margin-top: 10px;
+	width: 100%;
+	cursor: pointer;
+	border: 0;
+	}
+	
+	.judgeSubmit.success {
+		background: green;
+	}
+
+	.judgeSubmit1 {
+background-color: #131335;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding: 10px;
+    margin-top: 10px;
+	width: 100%;
+	cursor: pointer;
+	border: 0;
+	}
+	
+	.judgeSubmit1.success {
+		background: green;
+	}
+
+.imageMarker {
+    display: none;
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    z-index: 999;
+    width: 35px;
+    height: 35px;
+}
+
+.jurorEntryCol {
+	    background-size: cover;
+    background-position: center;
+		    position: relative;
+	}
+.jurorEntryCol.Accept .imageMarkerAccepted {
+    display: block;
+    background: url(/wp-content/uploads/2023/02/Accepted_Icon.png) no-repeat center;
+	background-size: 70%;
+	background-color: white;
+    border-radius: 50%;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 0px 16px 0px;
+}
+
+.jurorEntryCol.Reject .imageMarkerRejected {
+    display: block;
+    background: url(/wp-content/uploads/2023/02/Rejected_Icon.png) no-repeat center;
+	background-size: 70%;
+	background-color: white;
+    border-radius: 50%;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 0px 16px 0px;
+}
+
+.jurorEntryCol.Alternate .imageMarkerAlternate {
+    display: block;
+    background: url(/wp-content/uploads/2023/02/Alternate_Icon.png) no-repeat center;
+	background-size: 60%;
+	background-color: white;
+    border-radius: 50%;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 0px 16px 0px;
+}
+	
+	.paintingGalleryItemJuror {
+		aspect-ratio: 1;
+		width: 100%!important;
+	}
+	
+	.filterBar {
+		padding: 20px 0 40px 0;
+	}
+	
+	.navSlides {
+		border: none;
+	}
+	.prevSlide {
+		text-align: left;
+	}
+	
+	.judgeInputWrapper label {
+		margin: 0!important;
+	}
+	.awardLabel,
+	.alternateNumberLabel {
+    margin: 0;
+}
+	.paintingGalleryJuror {
+		    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+	}
+	
+	.jurorFilterWrapper.button {
+		display: flex;
+    	gap: 20px;
+	}
+	
+	.jurorFilterWrapper > button {
+		border-radius: 16px;
+		border: 1px solid #D0D0D0;
+		overflow: auto;
+		width: 100%;
+		cursor: pointer;
+		padding: 0;
+	}
+	.jurorFilterWrapper > label {
+		position: relative;
+		overflow: hidden;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		margin: 0;
+	}
+	.jurorFilterWrapper input+div {
+		color: #fff;
+		width: 100%;
+		text-align: center;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+    	font-size: 20px;
+		border-radius: 16px;
+		border: 1px solid #D0D0D0;
+	}
+	
+ 	.jurorFilterWrapper.accepted input+div {
+		background-color: rgb(0 117 129 / 85%);
+	}
+	.jurorFilterWrapper.accepted input:checked+div {
+    background-color: #007581;
+	} 
+	.jurorFilterWrapper.accepted input:checked+div::after {
+		content: "selected";
+		font-size: 12px;
+		padding-left: 10px;
+	} 
+
+	.jurorFilterWrapper.rejected input+div {
+		background-color: rgb(194 93 130 / 85%);
+	}
+	.jurorFilterWrapper.rejected input:checked+div {
+		background-color: #c25d82;
+	}
+	.jurorFilterWrapper.rejected input:checked+div::after {
+		content: "selected";
+		font-size: 12px;
+		padding-left: 10px;
+	} 
+	.jurorFilterWrapper.alternate input+div {
+		background-color: rgb(143 124 201 / 85%);
+	}
+	.jurorFilterWrapper.alternate input:checked+div {
+    	background-color: #8f7cc9;
+	}
+	.jurorFilterWrapper.alternate input:checked+div::after {
+		content: "selected";
+		font-size: 12px;
+		padding-left: 10px;
+	} 
+	.jurorFilterWrapper > label > input {
+    position: absolute;
+    width: 100%;
+    left: -100vw;
+	}
+	.filterBar form{
+		display: grid;
+		grid-template-columns: 2fr 2fr 2fr 2fr;
+		gap: 20px;
+	}
+@media screen and (max-width: 900px) {
+	.modalLeftCol {
+		width: 100%;
+		padding-right: 30px;
+	}
+	.modalRightCol {
+		width: 100%;
+		padding-top: 40px;
+		border-left: none;
+		    background: white;
+	}
+	.modal-content {
+		height: unset;
+		padding: 0;
+		max-height: 100%;
+		border-radius: 0;
+	}
+	.paintingGalleryJuror {
+		    grid-template-columns: 1fr 1fr;
+	}
+	.filterBar form {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+@media screen and (max-width: 480px) {
+		.filterBar form {
+		grid-template-columns: 1fr;
+	}
+}
+/* END Juror Platform Styling */
