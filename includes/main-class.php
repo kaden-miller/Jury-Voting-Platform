@@ -122,11 +122,10 @@ class WordPress_Plugin_Starter {
      * @method plugin_enqueue_scripts
      */
     function plugin_enqueue_scripts() {
-        // wp_register_style( 'wps-user-style', WPS_DIRECTORY_URL . '/assets/dist/css/user-style.css', array(), null );
-        // wp_register_script( 'wps-user-script', WPS_DIRECTORY_URL . '/assets/dist/js/user-script.min.js', array(), null, true );
-        // wp_enqueue_script('jquery');
-        // wp_enqueue_style('wps-user-style');
-        // wp_enqueue_script('wps-user-script');
+        wp_register_style( 'wps-user-style', WPS_DIRECTORY_URL . '/files/css/style.css', array(), null );
+        wp_enqueue_script('jquery');
+        wp_enqueue_style('wps-user-style');
+        wp_enqueue_script('wps-user-script');
     }
 
     /**
