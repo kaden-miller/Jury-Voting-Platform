@@ -19,25 +19,37 @@ add_action('add_meta_boxes', 'add_judges_scores_meta_box');
 
 
 function display_judges_scores($post) {
-    // Retrieve judges' scores for this post
     $judges_scores = get_judges_scores_for_post($post->ID);
 
-    // Display the scores in a table or similar structure
     echo '<table>';
-    echo '<thead><tr><th>Judge</th><th>Creativity</th><th>Use of Color</th><th>Originality</th></tr></thead>';
+    echo '<thead><tr><th>Judge</th><th>Creativity</th><th>Use of Color</th><th>Originality</th><th>Judge Total Score</th></tr></thead>';
     echo '<tbody>';
 
+    $post_total_score = 0; // Initialize total score for the post
+
     foreach ($judges_scores as $judge_id => $scores) {
+        $judge_total_score = 0; // Initialize total score for each judge
+
         echo '<tr>';
         echo '<td>' . get_judge_name_by_id($judge_id) . '</td>'; 
+
         foreach ($scores as $criterion => $score) {
+            $judge_total_score += intval($score); // Add score to judge total
             echo '<td>' . esc_html($score) . '</td>';
         }
+
+        $post_total_score += $judge_total_score; // Add judge total to post total
+        echo '<td>' . $judge_total_score . '</td>'; // Display judge total score
         echo '</tr>';
     }
 
     echo '</tbody></table>';
+
+    // Display the total score for the post
+    echo '<p><strong>Total Score for This Application: ' . $post_total_score . '</strong></p>';
 }
+
+
 
 
 function get_judges_scores_for_post($post_id) {
