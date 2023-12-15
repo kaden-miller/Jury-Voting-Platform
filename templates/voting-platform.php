@@ -69,10 +69,10 @@ function display_scholarship_modal($painting_id) {
     // Post title
     $post_title = get_the_title($post_id);
     // Get the URL of the plugin directory
-    $plugin_url = plugin_dir_url( __FILE__ );
+    $plugin_url = WPS_DIRECTORY_URL;
 
     // Path to pdf icon
-    $image_url = $plugin_url . 'files/images/PDF_file_icon.png';
+    $pdf_image_url = $plugin_url . '/files/images/PDF_file_icon.png';
 
 
 
@@ -124,29 +124,28 @@ function display_scholarship_modal($painting_id) {
                     <h4><?php echo esc_attr($fp_author_city1); ?>, <?php echo esc_attr($fp_author_state1); ?></h4>
                     <div class="accordion">
                         <div class="accordion-item">
-                            <button class="accordion-button active" type="button">Autobiography</button>
+                            <button class="accordion-button active" type="button">Autobiography<span class="icon" aria-hidden="true"></span></button>
                             <div class="accordion-content" style="display: block;"><?php echo nl2br(esc_html($fp_author_autobiography1)); ?></div>
 
 
                         </div>        
                         <div class="accordion-item">
-                            <button class="accordion-button" type="button">Art Studies</button>
+                            <button class="accordion-button" type="button"><span>Art Studies</span><span class="icon" aria-hidden="true"></span></button>
                             <div class="accordion-content"><?php echo nl2br(esc_html($fp_author_art_studies1)); ?></div>
                         </div>
                         <div class="accordion-item">
-                            <button class="accordion-button" type="button">Other Activities</button>
+                            <button class="accordion-button" type="button"><span>Other Activities<span class="icon" aria-hidden="true"></span></button>
                             <div class="accordion-content"><?php echo nl2br(esc_html($fp_author_other_activities1)); ?></div>
                         </div>
                         <div class="accordion-item">
-                            <button class="accordion-button" type="button">Artist Statment</button>
+                            <button class="accordion-button" type="button"><span>Artist Statment<span class="icon" aria-hidden="true"></span></button>
                             <div class="accordion-content"><?php echo nl2br(esc_html($fp_author_artists_statement1)); ?></div>
                         </div>            
                     </div>
 
                     <a class="letter-of-rec-button" href="<?php echo esc_url($fp_author_letterOfRec) ?>" target="_blank">
-                        <img src="<?php echo esc_url($image_url) ?>"/>
+                        <img src="<?php echo esc_url($pdf_image_url) ?>"/>
                         <h4>View letter of reccomendation</h4>
-                        <p><?php echo esc_url($image_url) ?></p>
                     </a>
                 </div>
             </div>
@@ -194,7 +193,7 @@ function display_scholarship_modal($painting_id) {
             <div class="favorite-button" data-post-id="<?php echo get_the_ID(); ?>" aria-pressed="<?php echo $is_favorite ? 'true' : 'false'; ?>">
                 <?php echo $is_favorite ? 'Click to Unfavorite' : 'Click to Favorite'; ?>
             </div>
-            <div style="padding-top: 20px;">
+            <div style="padding-top: 20px; width: 100%">
                 <p style="font-size: 12px; text-align: center;">
                 Favorited paintings will be available for review in the main gallery.
                 </p>

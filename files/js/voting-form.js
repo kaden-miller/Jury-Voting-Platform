@@ -4,21 +4,34 @@ jQuery(document).ready(function($) {
         e.preventDefault();
 
         var formData = $(this).serialize() + '&action=handle_judge_voting&nonce=' + $('#judge_vote_nonce').val();
+        var formSuccess = jQuery(".judgeSubmit1", this);
 
         $.ajax({
             type: 'POST',
             url: ajax_object.ajax_url,
             data: formData,
             success: function(response) {
-                console.log(response);
-                alert(response); // Displaying response for user feedback
+              $(formSuccess).addClass("success");
+              $(formSuccess).val("Success!");
+              
             },
             error: function() {
                 console.log('error');
             }
         });
     });
+
+    jQuery('.modalJuror').on('click', '.judgeSubmit1', function() {
+      var submitButton = $(this);
+       setTimeout(function() {
+           jQuery(submitButton).removeClass( "success" );
+        jQuery(submitButton).val("Vote");
+       }, 5000);
+    });	
 });
+
+
+
 
 
 

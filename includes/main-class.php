@@ -80,7 +80,7 @@ class Jury_Plugin_CP {
         load_plugin_textDomain( WPS_TEXT_DOMAIN, false, dirname(WPS_DIRECTORY_BASENAME) . '/languages' );
     }
 
-    // function plugin_admin_menu_function() {
+    function plugin_admin_menu_function() {
 
     //     //create main top-level menu with empty content
     //     add_menu_page( __('WordPress Plugin Starter', WPS_TEXT_DOMAIN), __('Plugin Starter', WPS_TEXT_DOMAIN), 'administrator', 'wps-general', null, 'dashicons-admin-generic', 4 );
@@ -94,7 +94,7 @@ class Jury_Plugin_CP {
     // 	//call register settings function
     // 	add_action( 'admin_init', array($this, 'plugin_register_settings') );
 
-    // }
+    }
 
     /**
      * Register the main Plugin Settings
