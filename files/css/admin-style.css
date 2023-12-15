@@ -1,0 +1,75 @@
+.wp-admin.post-type-scholarships {
+
+}
+
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box {
+
+}
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box table {
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box .inside {
+    margin: 0;
+    padding: 15px;
+}
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box  thead tr {
+    background-color: #32737F;
+    color: #ffffff;
+    text-align: left;
+}
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box  th,
+.wp-admin.post-type-scholarships #judges_scores_meta_box  td {
+    padding: 12px 15px;
+}
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.wp-admin.post-type-scholarships #judges_scores_meta_box tbody tr:last-of-type {
+    border-bottom: 2px solid #32737F;
+}
+
+.wp-admin.post-type-scholarships #applicant_info_meta_box .inside {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.wp-admin.post-type-scholarships #applicant_info_meta_box label:not(:first-of-type) {
+    border-top: 1px solid black;
+    padding-top: 20px;
+}
+
+.wp-admin.post-type-scholarships #applicant_info_meta_box label {
+    padding-bottom: 5px;
+    font-weight: 700;
+}
+
+.wp-admin.post-type-scholarships #applicant_info_meta_box .image-set {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    background: #f9f9f9;
+    border: 1px solid darkgrey;
+    margin-bottom: 20px;
+}
+
+.wp-admin.post-type-scholarships tbody tr.active-row {
+    font-weight: bold;
+    color: #32737F;
+}

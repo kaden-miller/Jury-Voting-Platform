@@ -99,7 +99,9 @@ function add_applicant_info_meta_box() {
         'normal',                         // Context
         'high'                            // Priority
     );
+    
 }
+
 add_action('add_meta_boxes', 'add_applicant_info_meta_box');
 
 function applicant_info_meta_box_content($post) {
@@ -134,32 +136,74 @@ function applicant_info_meta_box_content($post) {
         'other_activities' => 'Other Activities',
         'artists_statement' => 'Artists Statement',
         'autobiography' => 'Autobiography',
-        // Add more text areas as needed...
     ];
 
 
-    // Output form fields for text areas
+    // Output form fields for text areas with TinyMCE
     foreach ($text_areas as $field => $label) {
         $value = get_post_meta($post->ID, $field, true);
         echo '<label for="' . $field . '">' . $label . ':</label>';
-        echo '<textarea id="' . $field . '" name="' . $field . '">' . esc_textarea($value) . '</textarea><br />';
+        wp_editor(html_entity_decode($value), $field, array(
+            'textarea_name' => $field,
+            'editor_height' => 200 // Adjust height as needed
+        ));
+    }
+
+    // PDF Upload Field
+    echo '<label for="applicant_pdf">Applicant PDF:</label>';
+    echo '<input type="file" id="applicant_pdf" name="applicant_pdf" /><br />';
+
+    // Retrieve existing PDF URL if available
+    $pdf_url = get_post_meta($post->ID, 'applicant_pdf', true);
+    if ($pdf_url) {
+        echo '<a href="' . esc_url($pdf_url) . '">View Uploaded PDF</a><br />';
     }
 
     // File upload/image fields
-    // Note: Handling file uploads in WordPress requires additional steps.
     echo '<label for="headshot">Headshot:</label>';
     echo '<input type="hidden" id="headshot" name="headshot" value="' . esc_attr(get_post_meta($post->ID, 'headshot', true)) . '" />';
     echo '<button type="button" onclick="open_media_uploader_image(\'headshot\')">Select Image</button>';
     echo '<br />';
 
     $headshot_url = get_post_meta($post->ID, 'headshot', true);
-    if ($headshot_url) {
-        echo '<img src="' . esc_url($headshot_url) . '" style="max-width:150px;"/><br />';
+    $display_style = $headshot_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
+    echo '<img id="headshot_preview" src="' . esc_url($headshot_url) . '" style="' . $display_style . '"/><br />';
+
+    // Loop through 5 image fields
+    for ($i = 1; $i <= 5; $i++) {
+        // Define field IDs
+        $image_id = 'image_' . $i;
+        $title_id = 'image_' . $i . '_title';
+        $width_id = 'image_' . $i . '_width';
+        $height_id = 'image_' . $i . '_height';
+        $medium_id = 'image_' . $i . '_medium';
+
+        // Display fields for title, width, height, and medium
+        echo '<div class="image-set">';
+        echo '<label for="' . $title_id . '">Image ' . $i . ' Title:</label>';
+        echo '<input type="text" id="' . $title_id . '" name="' . $title_id . '" value="' . esc_attr(get_post_meta($post->ID, $title_id, true)) . '" /><br />';
+        echo '<label for="' . $width_id . '">Width:</label>';
+        echo '<input type="text" id="' . $width_id . '" name="' . $width_id . '" value="' . esc_attr(get_post_meta($post->ID, $width_id, true)) . '" /><br />';
+        echo '<label for="' . $height_id . '">Height:</label>';
+        echo '<input type="text" id="' . $height_id . '" name="' . $height_id . '" value="' . esc_attr(get_post_meta($post->ID, $height_id, true)) . '" /><br />';
+        echo '<label for="' . $medium_id . '">Medium:</label>';
+        echo '<input type="text" id="' . $medium_id . '" name="' . $medium_id . '" value="' . esc_attr(get_post_meta($post->ID, $medium_id, true)) . '" /><br />';
+
+        // File upload/image field
+        echo '<label for="' . $image_id . '">Image ' . $i . ':</label>';
+        echo '<input type="hidden" id="' . $image_id . '" name="' . $image_id . '" value="' . esc_attr(get_post_meta($post->ID, $image_id, true)) . '" />';
+        echo '<button type="button" onclick="open_media_uploader_image(\'' . $image_id . '\')">Select Image</button>';
+        echo '<br />';
+
+        // Display image preview
+        $image_url = get_post_meta($post->ID, $image_id, true);
+        $display_style = $image_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
+        echo '<img id="' . $image_id . '_preview" src="' . esc_url($image_url) . '" style="' . $display_style . '"/><br />';
+        echo '</div>';
+
     }
 
     
-    // Add similar blocks for Image 1 and Image 2 file uploads...
-    // Remember to handle image width, height, medium, and title fields as text fields
 }
 
 function save_applicant_info($post_id) {
@@ -192,14 +236,63 @@ function save_applicant_info($post_id) {
 
     foreach ($fields as $field) {
         if (array_key_exists($field, $_POST)) {
-            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+            update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
         }
     }
+
+
+    // Handle the PDF file upload
+    if (!empty($_FILES['applicant_pdf']['name'])) {
+        require_once(ABSPATH . 'wp-admin/includes/file.php'); // Load WordPress file handling functions
+
+        // Check for upload errors
+        if ($_FILES['applicant_pdf']['error'] === UPLOAD_ERR_OK) {
+            // Set upload overrides
+            $overrides = array(
+                'test_form' => false,
+                'mimes' => array('pdf' => 'application/pdf') // Restrict to PDFs
+            );
+
+            // Handle the file upload
+            $uploaded_file = wp_handle_upload($_FILES['applicant_pdf'], $overrides);
+
+            if (!isset($uploaded_file['error'])) {
+                // File is uploaded successfully, now save the file URL in post meta
+                $file_url = $uploaded_file['url'];
+                update_post_meta($post_id, 'applicant_pdf', $file_url);
+            } else {
+                // Handle errors
+                wp_die('File upload error: ' . $uploaded_file['error']);
+            }
+        } else {
+            // Handle upload errors
+            wp_die('Upload error code: ' . $_FILES['applicant_pdf']['error']);
+        }
+    }
+
 
     // Handle file upload fields separately
     // Note: You need to handle file uploads in a secure manner. This is just an example.
     if (isset($_POST['headshot'])) {
         update_post_meta($post_id, 'headshot', sanitize_text_field($_POST['headshot']));
+    }
+
+    // Loop through the 5 image sets
+    for ($i = 1; $i <= 5; $i++) {
+        // Define field IDs for each attribute
+        $image_id = 'image_' . $i;
+        $title_id = 'image_' . $i . '_title';
+        $width_id = 'image_' . $i . '_width';
+        $height_id = 'image_' . $i . '_height';
+        $medium_id = 'image_' . $i . '_medium';
+
+        // Update the post meta for each field if it's set
+        $fields_to_save = [$image_id, $title_id, $width_id, $height_id, $medium_id];
+        foreach ($fields_to_save as $field_id) {
+            if (isset($_POST[$field_id])) {
+                update_post_meta($post_id, $field_id, sanitize_text_field($_POST[$field_id]));
+            }
+        }
     }
     
 }

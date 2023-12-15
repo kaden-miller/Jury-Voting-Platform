@@ -4,7 +4,12 @@ jQuery(document).ready(function($) {
             url: ajax_object.ajax_url,
             data: { action: 'filter_by_date' },
             success: function(response) {
-                $('#scholarship-applications').html(response);
+                console.log('success');
+                $('#scholarship-applications').html(response.gridContent);
+                $('#myModal1 .modal-content').html(response.modalContent);
+           }, 
+            error: function(response) {
+                console.log(response);
             }
         });
     });
@@ -14,7 +19,27 @@ jQuery(document).ready(function($) {
             url: ajax_object.ajax_url,
             data: { action: 'filter_by_score' },
             success: function(response) {
-                $('#scholarship-applications').html(response);
+                console.log('success');
+                $('#scholarship-applications').html(response.gridContent);
+                $('#myModal1 .modal-content').html(response.modalContent);
+           },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+    });
+
+    $('#filter-by-favorite').click(function() {
+        $.ajax({
+            url: ajax_object.ajax_url,
+            data: { action: 'filter_by_favorite' },
+            success: function(response) {
+                console.log('success');
+                $('#scholarship-applications').html(response.gridContent);
+                $('#myModal1 .modal-content').html(response.modalContent);
+            },
+            error: function(response) {
+                console.log(response);
             }
         });
     });
