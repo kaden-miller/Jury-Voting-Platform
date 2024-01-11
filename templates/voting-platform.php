@@ -56,6 +56,7 @@ function display_scholarship_modal($painting_id) {
     $fp_author_age1 = get_post_meta($post_id, 'age', true);
     $fp_author_college1 = get_post_meta($post_id, 'college', true);
     $fp_author_year_in_school1 = get_post_meta($post_id, 'year_in_school', true);
+    $fp_author_year_in_school_expl1 = get_post_meta($post_id, 'year_in_school_expl', true);
     // Text Areas
     $fp_author_art_studies1 = get_post_meta($post_id, 'art_studies', true);
     $fp_author_other_activities1 = get_post_meta($post_id, 'other_activities', true);
@@ -122,7 +123,9 @@ function display_scholarship_modal($painting_id) {
                 <div class="textFields">
                     <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
                     <h4>Age: <?php echo esc_attr($fp_author_age1); ?></h4>
-                    <h4><?php echo esc_attr($fp_author_year_in_school1); ?> at <?php echo esc_attr($fp_author_college1); ?></h4>
+                    <h4><?php if(!$fp_author_year_in_school_expl1) { echo esc_attr($fp_author_year_in_school1); } else {
+                        echo esc_attr($fp_author_year_in_school_expl1);
+                    } ?> at <?php echo esc_attr($fp_author_college1); ?></h4>
                     <h4><?php echo esc_attr($fp_author_city1); ?>, <?php echo esc_attr($fp_author_state1); ?></h4>
                     <div class="accordion">
                         <div class="accordion-item">
