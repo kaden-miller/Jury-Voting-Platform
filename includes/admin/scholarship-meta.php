@@ -112,6 +112,7 @@ function applicant_info_meta_box_content($post) {
     $fields = [
         'first_name' => 'Applicants First Name',
         'last_name' => 'Applicants Last Name',
+        'address' => 'Address',
         'city' => 'City',
         'state' => 'State',
         'country' => 'Country',
@@ -177,6 +178,7 @@ function applicant_info_meta_box_content($post) {
         $width_id = 'image_' . $i . '_width';
         $height_id = 'image_' . $i . '_height';
         $medium_id = 'image_' . $i . '_medium';
+        $support_id = 'image_' . $i . '_support';
 
         // Display fields for title, width, height, and medium
         echo '<div class="image-set">';
@@ -188,6 +190,8 @@ function applicant_info_meta_box_content($post) {
         echo '<input type="text" id="' . $height_id . '" name="' . $height_id . '" value="' . esc_attr(get_post_meta($post->ID, $height_id, true)) . '" /><br />';
         echo '<label for="' . $medium_id . '">Medium:</label>';
         echo '<input type="text" id="' . $medium_id . '" name="' . $medium_id . '" value="' . esc_attr(get_post_meta($post->ID, $medium_id, true)) . '" /><br />';
+        echo '<label for="' . $support_id . '">Support:</label>';
+        echo '<input type="text" id="' . $support_id . '" name="' . $support_id . '" value="' . esc_attr(get_post_meta($post->ID, $support_id, true)) . '" /><br />';
 
         // File upload/image field
         echo '<label for="' . $image_id . '">Image ' . $i . ':</label>';
