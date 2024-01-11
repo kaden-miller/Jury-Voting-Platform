@@ -121,6 +121,7 @@ function applicant_info_meta_box_content($post) {
         'age' => 'Age',
         'college' => 'College',
         'year_in_school' => 'Year in School',
+        'year_in_school_expl' => 'Year in School Explanation',
     ];
 
     // Output form fields
@@ -227,7 +228,7 @@ function save_applicant_info($post_id) {
     // Save each text and text area field
     $fields = [
         'first_name', 'last_name', 'city', 'state', 'country', 'phone', 'email', 'website', 
-        'age', 'college', 'year_in_school', 'art_studies', 'other_activities', 
+        'age', 'college', 'year_in_school', ,'year_in_school_expl' 'art_studies', 'other_activities', 
         'artists_statement', 'autobiography', 'image_1_title', 'image_1_width', 
         'image_1_height', 'image_1_medium', 'image_2_title', 'image_2_width', 
         'image_2_height', 'image_2_medium'
