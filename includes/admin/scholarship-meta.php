@@ -162,15 +162,15 @@ function applicant_info_meta_box_content($post) {
         echo '<a href="' . esc_url($pdf_url) . '">View Uploaded PDF</a><br />';
     }
 
-    // File upload/image fields
-    echo '<label for="headshot">Headshot:</label>';
-    echo '<input type="hidden" id="headshot" name="headshot" value="' . esc_attr(get_post_meta($post->ID, 'headshot', true)) . '" />';
-    echo '<button type="button" onclick="open_media_uploader_image(\'headshot\')">Select Image</button>';
-    echo '<br />';
+    // // File upload/image fields
+    // echo '<label for="headshot">Headshot:</label>';
+    // echo '<input type="hidden" id="headshot" name="headshot" value="' . esc_attr(get_post_meta($post->ID, 'headshot', true)) . '" />';
+    // echo '<button type="button" onclick="open_media_uploader_image(\'headshot\')">Select Image</button>';
+    // echo '<br />';
 
-    $headshot_url = get_post_meta($post->ID, 'headshot', true);
-    $display_style = $headshot_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
-    echo '<img id="headshot_preview" src="' . esc_url($headshot_url) . '" style="' . $display_style . '"/><br />';
+    // $headshot_url = get_post_meta($post->ID, 'headshot', true);
+    // $display_style = $headshot_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
+    // echo '<img id="headshot_preview" src="' . esc_url($headshot_url) . '" style="' . $display_style . '"/><br />';
 
     // Loop through 5 image fields
     for ($i = 1; $i <= 5; $i++) {
