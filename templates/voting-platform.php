@@ -46,6 +46,7 @@ function display_scholarship_modal($painting_id) {
     // Text fields
     $fp_author_fn1 = get_post_meta($post_id, 'first_name', true);
     $fp_author_ln1 = get_post_meta($post_id, 'last_name', true);
+    $fp_author_address1 = get_post_meta($post_id, 'address', true);
     $fp_author_city1 = get_post_meta($post_id, 'city', true);
     $fp_author_state1 = get_post_meta($post_id, 'state', true);
     $fp_author_country1 = get_post_meta($post_id, 'country', true);
@@ -95,11 +96,12 @@ function display_scholarship_modal($painting_id) {
                             $width = get_post_meta($post_id, 'image_' . $i . '_width', true);
                             $height = get_post_meta($post_id, 'image_' . $i . '_height', true);
                             $medium = get_post_meta($post_id, 'image_' . $i . '_medium', true);
+                            $support = get_post_meta($post_id, 'image_' . $i . '_support', true);
 
                             // Display the data if the image URL is set
                             if ($image_url) {
                                 echo '<div class="image-meta-block">';
-                                echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($title) . '" style="" data-title="' . esc_attr($title) . '" data-width="' . esc_attr($width) . '" data-height="' . esc_attr($height) . '" data-medium="' . esc_attr($medium) . '">';
+                                echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($title) . '" style="" data-title="' . esc_attr($title) . '" data-width="' . esc_attr($width) . '" data-height="' . esc_attr($height) . '" data-medium="' . esc_attr($medium) . '"data-support="' . esc_attr($support) . '">';
                                 echo '</div>';
                             }                            
                         }
@@ -155,6 +157,7 @@ function display_scholarship_modal($painting_id) {
                 <h4 class="pnt-title">Painting Title: </h4>
                 <h4 class="pnt-dimen">Painting width x Painting height</h4>
                 <h4 class="pnt-medm">Medium: </h4>
+                <h4 class="pnt-sprt">Support: </h4>
             </div>
 
           <div class="entry-content">

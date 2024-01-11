@@ -226,12 +226,14 @@ function save_applicant_info($post_id) {
 
     // Save each text and text area field
     $fields = [
-        'first_name', 'last_name', 'city', 'state', 'country', 'phone', 'email', 'website', 
+        'first_name', 'last_name', 'address', 'city', 'state', 'country', 'phone', 'email', 'website', 
         'age', 'college', 'year_in_school', 'art_studies', 'other_activities', 
         'artists_statement', 'autobiography', 'image_1_title', 'image_1_width', 
-        'image_1_height', 'image_1_medium', 'image_2_title', 'image_2_width', 
-        'image_2_height', 'image_2_medium'
-        // Add all text field IDs here
+        'image_1_height', 'image_1_medium', 'image_1_support', 'image_2_title', 'image_2_width', 
+        'image_2_height', 'image_2_medium', 'image_2_support', 'image_3_title', 'image_3_width',
+        'image_3_height', 'image_3_medium', 'image_3_support', 'image_4_title', 'image_4_width',
+        'image_4_height', 'image_4_medium', 'image_4_support', 'image_5_title', 'image_5_width',
+        'image_5_height', 'image_5_medium', 'image_5_support'
     ];
 
     foreach ($fields as $field) {
@@ -285,6 +287,7 @@ function save_applicant_info($post_id) {
         $width_id = 'image_' . $i . '_width';
         $height_id = 'image_' . $i . '_height';
         $medium_id = 'image_' . $i . '_medium';
+        $support_id = 'image_' . $i . '_support';
 
         // Update the post meta for each field if it's set
         $fields_to_save = [$image_id, $title_id, $width_id, $height_id, $medium_id];
