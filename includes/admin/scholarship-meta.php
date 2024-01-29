@@ -27,8 +27,58 @@ function display_judges_scores($post) {
     $judges_scores = get_judges_scores_for_post($post->ID);
 
     echo '<table>';
-    echo '<thead><tr><th>Judge</th><th>Creativity</th><th>Use of Color</th><th>Originality</th><th>Judge Total Score</th></tr></thead>';
-    echo '<tbody>';
+    echo '<thead><tr>
+            <th>Biography</th>
+            <th>Statement</th>
+            <th>Annotated List</th>
+            <th>Letter of Recommendation</th>
+            <th class="image-total">Image 1 Total
+                <div class="image-details">
+                    <span>Technique</span>
+                    <span>Composition</span>
+                    <span>Value/Color</span>
+                    <span>Creativity</span>
+                    <span>Emotional Impact</span>
+                </div>
+            </th>
+            <th class="image-total">Image 2 Total
+                <div class="image-details">
+                    <span>Technique</span>
+                    <span>Composition</span>
+                    <span>Value/Color</span>
+                    <span>Creativity</span>
+                    <span>Emotional Impact</span>
+                </div>
+            </th>
+            <th class="image-total">Image 3 Total                
+                <div class="image-details">
+                    <span>Technique</span>
+                    <span>Composition</span>
+                    <span>Value/Color</span>
+                    <span>Creativity</span>
+                    <span>Emotional Impact</span>
+                </div>
+            </th>
+            <th class="image-total">Image 4 Total                
+                <div class="image-details">
+                    <span>Technique</span>
+                    <span>Composition</span>
+                    <span>Value/Color</span>
+                    <span>Creativity</span>
+                    <span>Emotional Impact</span>
+                </div>
+            </th>
+            <th class="image-total">Image 5 Total                
+                <div class="image-details">
+                    <span>Technique</span>
+                    <span>Composition</span>
+                    <span>Value/Color</span>
+                    <span>Creativity</span>
+                    <span>Emotional Impact</span>
+                </div>
+            </th>
+        </tr></thead>';
+echo '<tbody>';
 
     foreach ($judges_scores as $judge_id => $scores) {
         $judge_total_score = 0; // Initialize total score for each judge

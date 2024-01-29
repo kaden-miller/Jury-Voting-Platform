@@ -26,7 +26,41 @@ function handle_judge_voting() {
     $painting_id = sanitize_text_field($_POST['painting_id']);
 
     $field_prefix = 'judge_' . $judge_id . '_';
-    $criteria_fields = ['creativity', 'color_use', 'originality'];
+    $criteria_fields = ['biography',
+                        'statement',
+                        'annotated_list',
+                        'letter_reccomendation',
+                        'image_1_total',
+                        'image_1_technique',
+                        'image_1_composition',
+                        'image_1_value_color',
+                        'image_1_creativity',
+                        'image_1_emotional_impact',
+                        'image_2_total',
+                        'image_2_technique',
+                        'image_2_composition',
+                        'image_2_value_color',
+                        'image_2_creativity',
+                        'image_2_emotional_impact',
+                        'image_3_total',
+                        'image_3_technique',
+                        'image_3_composition',
+                        'image_3_value_color',
+                        'image_3_creativity',
+                        'image_3_emotional_impact',
+                        'image_4_total',
+                        'image_4_technique',
+                        'image_4_composition',
+                        'image_4_value_color',
+                        'image_4_creativity',
+                        'image_4_emotional_impact',
+                        'image_5_total',
+                        'image_5_technique',
+                        'image_5_composition',
+                        'image_5_value_color',
+                        'image_5_creativity',
+                        'image_5_emotional_impact',
+                        ];
     $judge_total_score = 0; // Initialize total score for this judge
 
     foreach ($criteria_fields as $criterion) {
@@ -91,7 +125,7 @@ function toggle_favorite() {
 
         wp_send_json_success(array(
             'is_favorite' => $favorite,
-            'button_text' => $favorite ? 'Unfavorite' : 'Favorite'
+            'button_text' => $favorite ? 'Click to Unfavorite' : 'Click to Favorite'
         ));
     } else {
         wp_send_json_error();
