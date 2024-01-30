@@ -755,8 +755,15 @@ img.hover-shadow {
   gap: 10px;
 }
 
+.form-page h4 {
+  margin-bottom: 0;
+}
+
 .form-page input {
   margin-bottom: 10px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
 }
 
 .form-nav-action-wrapper {
