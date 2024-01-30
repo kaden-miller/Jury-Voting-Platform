@@ -133,9 +133,11 @@ function display_scholarship_modal($painting_id) {
                 <div class="textFields">
                     <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
                     <h4>Age: <?php echo esc_attr($fp_author_age1); ?></h4>
+
                     <h4><?php if(!$fp_author_year_in_school_expl1) { echo esc_attr($fp_author_year_in_school1); } else {
                         echo esc_attr($fp_author_year_in_school_expl1);
                     } ?> at <?php echo esc_attr($fp_author_college1); ?></h4>
+              
                     <h4><?php echo esc_attr($fp_author_city1); ?>, <?php echo esc_attr($fp_author_state1); ?></h4>
                     <div class="accordion">
                         <div class="accordion-item">
