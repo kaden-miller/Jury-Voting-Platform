@@ -295,10 +295,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".jury-voting-form").forEach(initializeForm);
 });
 
-function reinitializeForm() {
-  document.querySelectorAll(".jury-voting-form").forEach(initializeForm);
-}
-
 function setupTotalCalculationForPage(page) {
   // Find the total field on the page
   const totalField = page.querySelector('[name*="_total"]');
@@ -336,3 +332,10 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelectorAll(".jury-voting-form .form-page")
     .forEach(setupTotalCalculationForPage);
 });
+
+function reinitializeForm() {
+  document.querySelectorAll(".jury-voting-form").forEach(initializeForm);
+  document
+    .querySelectorAll(".jury-voting-form .form-page")
+    .forEach(setupTotalCalculationForPage);
+}
