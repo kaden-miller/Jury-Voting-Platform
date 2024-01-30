@@ -130,7 +130,7 @@ function toggle_favorite() {
 
         wp_send_json_success(array(
             'is_favorite' => $favorite,
-            'button_text' => $favorite ? 'Click to Unfavorite' : 'Click to Favorite'
+            'button_text' => $favorite ? 'Unfavorite' : 'Favorite'
         ));
     } else {
         wp_send_json_error();

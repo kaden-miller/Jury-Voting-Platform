@@ -759,9 +759,13 @@ img.hover-shadow {
   margin-bottom: 0;
 }
 
+.form-page label {
+  margin-bottom: 0 !important;
+}
+
 .form-page input {
-  margin-bottom: 10px;
-  padding: 8px 10px;
+  margin-bottom: 10px !important;
+  padding: 8px 10px !important;
   font-size: 14px;
   border-radius: 6px;
 }

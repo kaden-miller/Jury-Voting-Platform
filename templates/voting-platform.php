@@ -338,7 +338,7 @@ function display_scholarship_modal($painting_id) {
             $is_favorite = get_post_meta(get_the_ID(), 'judge_' . get_current_user_id() . '_favorite', true);
             ?>
             <div class="favorite-button" data-post-id="<?php echo get_the_ID(); ?>" aria-pressed="<?php echo $is_favorite ? 'true' : 'false'; ?>">
-                <?php echo $is_favorite ? 'Click to Unfavorite' : 'Click to Favorite'; ?>
+                <?php echo $is_favorite ? 'Unfavorite' : 'Favorite'; ?>
             </div>
             <div style="padding-top: 20px; width: 100%">
                 <p style="font-size: 12px; text-align: center;">
@@ -605,7 +605,6 @@ function filter_scholarships_by_favorite() {
         ),
         'orderby' => 'meta_value_num',
         'order' => 'DESC',
-        'meta_key' => 'post_total_score' // Keep this if you still want to sort by score
     );
 
     $scholarships_query = new WP_Query($args);

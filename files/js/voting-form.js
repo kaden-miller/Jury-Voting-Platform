@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
     var submitButton = $(this);
     setTimeout(function () {
       jQuery(submitButton).removeClass("success");
-      jQuery(submitButton).val("Vote");
+      jQuery(submitButton).val("Save Vote");
     }, 2000);
   });
 
@@ -247,6 +247,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 function initializeForm(form) {
+  console.log("initializeForm");
   let currentPage = 1;
   const totalPages = 6; // Total number of pages in the form
 
@@ -296,6 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupTotalCalculationForPage(page) {
+  console.log("setupTotalCalculationForPage");
   // Find the total field on the page
   const totalField = page.querySelector('[name*="_total"]');
   if (!totalField) return;
@@ -338,4 +340,5 @@ function reinitializeForm() {
   document
     .querySelectorAll(".jury-voting-form .form-page")
     .forEach(setupTotalCalculationForPage);
+  console.log("reinitializeForm");
 }
