@@ -27,8 +27,60 @@ function display_judges_scores($post) {
     $judges_scores = get_judges_scores_for_post($post->ID);
 
     echo '<table>';
-    echo '<thead><tr><th>Judge</th><th>Creativity</th><th>Use of Color</th><th>Originality</th><th>Judge Total Score</th></tr></thead>';
-    echo '<tbody>';
+    echo '<thead><tr>
+            <th>Judge</th>
+            <th>Biography</th>
+            <th>Statement</th>
+            <th>Annotated List</th>
+            <th>Letter of Recommendation</th>
+                <div class="image-details">
+                    <th>Image 1 Technique</th>
+                    <th>Image 1 Composition</th>
+                    <th>Image 1 Value/Color</th>
+                    <th>Image 1 Creativity</th>
+                    <th>Image 1 Emotional Impact</th>
+                </div>
+                <th class="image-total">Image 1 Total</th>
+
+                <div class="image-details">
+                    <th>Image 2 Technique</th>
+                    <th>Image 2 Composition</th>
+                    <th>Image 2 Value/Color</th>
+                    <th>Image 2 Creativity</th>
+                    <th>Image 2 Emotional Impact</th>
+                </div>
+                <th class="image-total">Image 2 Total</th>
+
+            <div class="image-details">
+                <th>Image 3 Technique</th>
+                <th>Image 3 Composition</th>
+                <th>Image 3 Value/Color</th>
+                <th>Image 3 Creativity</th>
+                <th>Image 3 Emotional Impact</th>
+            </div>
+            <th class="image-total">Image 3 Total</th>
+
+            <div class="image-details">
+                <th>Image 4 Technique</th>
+                <th>Image 4 Composition</th>
+                <th>Image 4 Value/Color</th>
+                <th>Image 4 Creativity</th>
+                <th>Image 4 Emotional Impact</th>
+            </div>
+            <th class="image-total">Image 4 Total</th>
+
+            <div class="image-details">
+                <th>Image 5 Technique</th>
+                <th>Image 5 Composition</th>
+                <th>Image 5 Value/Color</th>
+                <th>Image 5 Creativity</th>
+                <th>Image 5 Emotional Impact</th>
+            </div>
+            <th class="image-total">Image 5 Total</th>
+            <th class="image-total">Judge Total</th>
+
+        </tr></thead>';
+echo '<tbody>';
 
     foreach ($judges_scores as $judge_id => $scores) {
         $judge_total_score = 0; // Initialize total score for each judge
@@ -112,6 +164,7 @@ function applicant_info_meta_box_content($post) {
     $fields = [
         'first_name' => 'Applicants First Name',
         'last_name' => 'Applicants Last Name',
+        'address' => 'Address',
         'city' => 'City',
         'state' => 'State',
         'country' => 'Country',
@@ -122,6 +175,7 @@ function applicant_info_meta_box_content($post) {
         'college' => 'College',
         'year_in_school' => 'Year in School',
         'year_in_school_expl' => 'Year in School Explanation',
+
     ];
 
     // Output form fields
@@ -160,15 +214,15 @@ function applicant_info_meta_box_content($post) {
         echo '<a href="' . esc_url($pdf_url) . '">View Uploaded PDF</a><br />';
     }
 
-    // File upload/image fields
-    echo '<label for="headshot">Headshot:</label>';
-    echo '<input type="hidden" id="headshot" name="headshot" value="' . esc_attr(get_post_meta($post->ID, 'headshot', true)) . '" />';
-    echo '<button type="button" onclick="open_media_uploader_image(\'headshot\')">Select Image</button>';
-    echo '<br />';
+    // // File upload/image fields
+    // echo '<label for="headshot">Headshot:</label>';
+    // echo '<input type="hidden" id="headshot" name="headshot" value="' . esc_attr(get_post_meta($post->ID, 'headshot', true)) . '" />';
+    // echo '<button type="button" onclick="open_media_uploader_image(\'headshot\')">Select Image</button>';
+    // echo '<br />';
 
-    $headshot_url = get_post_meta($post->ID, 'headshot', true);
-    $display_style = $headshot_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
-    echo '<img id="headshot_preview" src="' . esc_url($headshot_url) . '" style="' . $display_style . '"/><br />';
+    // $headshot_url = get_post_meta($post->ID, 'headshot', true);
+    // $display_style = $headshot_url ? 'max-width:150px;' : 'max-width:150px; display:none;';
+    // echo '<img id="headshot_preview" src="' . esc_url($headshot_url) . '" style="' . $display_style . '"/><br />';
 
     // Loop through 5 image fields
     for ($i = 1; $i <= 5; $i++) {
@@ -178,6 +232,7 @@ function applicant_info_meta_box_content($post) {
         $width_id = 'image_' . $i . '_width';
         $height_id = 'image_' . $i . '_height';
         $medium_id = 'image_' . $i . '_medium';
+        $support_id = 'image_' . $i . '_support';
 
         // Display fields for title, width, height, and medium
         echo '<div class="image-set">';
@@ -189,6 +244,8 @@ function applicant_info_meta_box_content($post) {
         echo '<input type="text" id="' . $height_id . '" name="' . $height_id . '" value="' . esc_attr(get_post_meta($post->ID, $height_id, true)) . '" /><br />';
         echo '<label for="' . $medium_id . '">Medium:</label>';
         echo '<input type="text" id="' . $medium_id . '" name="' . $medium_id . '" value="' . esc_attr(get_post_meta($post->ID, $medium_id, true)) . '" /><br />';
+        echo '<label for="' . $support_id . '">Support:</label>';
+        echo '<input type="text" id="' . $support_id . '" name="' . $support_id . '" value="' . esc_attr(get_post_meta($post->ID, $support_id, true)) . '" /><br />';
 
         // File upload/image field
         echo '<label for="' . $image_id . '">Image ' . $i . ':</label>';
@@ -227,12 +284,16 @@ function save_applicant_info($post_id) {
 
     // Save each text and text area field
     $fields = [
-        'first_name', 'last_name', 'city', 'state', 'country', 'phone', 'email', 'website', 
-        'age', 'college', 'year_in_school', ,'year_in_school_expl' 'art_studies', 'other_activities', 
+
+        'first_name', 'last_name', 'address', 'city', 'state', 'country', 'phone', 'email', 'website', 
+        'age', 'college', 'year_in_school', 'year_in_school_expl', 'art_studies', 'other_activities', 
+
         'artists_statement', 'autobiography', 'image_1_title', 'image_1_width', 
-        'image_1_height', 'image_1_medium', 'image_2_title', 'image_2_width', 
-        'image_2_height', 'image_2_medium'
-        // Add all text field IDs here
+        'image_1_height', 'image_1_medium', 'image_1_support', 'image_2_title', 'image_2_width', 
+        'image_2_height', 'image_2_medium', 'image_2_support', 'image_3_title', 'image_3_width',
+        'image_3_height', 'image_3_medium', 'image_3_support', 'image_4_title', 'image_4_width',
+        'image_4_height', 'image_4_medium', 'image_4_support', 'image_5_title', 'image_5_width',
+        'image_5_height', 'image_5_medium', 'image_5_support'
     ];
 
     foreach ($fields as $field) {
@@ -286,6 +347,7 @@ function save_applicant_info($post_id) {
         $width_id = 'image_' . $i . '_width';
         $height_id = 'image_' . $i . '_height';
         $medium_id = 'image_' . $i . '_medium';
+        $support_id = 'image_' . $i . '_support';
 
         // Update the post meta for each field if it's set
         $fields_to_save = [$image_id, $title_id, $width_id, $height_id, $medium_id];

@@ -46,6 +46,7 @@ function display_scholarship_modal($painting_id) {
     // Text fields
     $fp_author_fn1 = get_post_meta($post_id, 'first_name', true);
     $fp_author_ln1 = get_post_meta($post_id, 'last_name', true);
+    $fp_author_address1 = get_post_meta($post_id, 'address', true);
     $fp_author_city1 = get_post_meta($post_id, 'city', true);
     $fp_author_state1 = get_post_meta($post_id, 'state', true);
     $fp_author_country1 = get_post_meta($post_id, 'country', true);
@@ -75,7 +76,17 @@ function display_scholarship_modal($painting_id) {
     // Path to pdf icon
     $pdf_image_url = $plugin_url . '/files/images/PDF_file_icon.png';
 
+    $image_url_1 = get_post_meta($post_id, 'image_1', true);
+    $image_url_2 = get_post_meta($post_id, 'image_2', true);
+    $image_url_3 = get_post_meta($post_id, 'image_3', true);
+    $image_url_4 = get_post_meta($post_id, 'image_4', true);
+    $image_url_5 = get_post_meta($post_id, 'image_5', true);
 
+    $image_title_1 = get_post_meta($post_id, 'image_1_title', true);
+    $image_title_2 = get_post_meta($post_id, 'image_2_title', true);
+    $image_title_3 = get_post_meta($post_id, 'image_3_title', true);
+    $image_title_4 = get_post_meta($post_id, 'image_4_title', true);
+    $image_title_5 = get_post_meta($post_id, 'image_5_title', true);
 
     // Assuming $post_id is the ID of the current post
     ?>
@@ -96,11 +107,12 @@ function display_scholarship_modal($painting_id) {
                             $width = get_post_meta($post_id, 'image_' . $i . '_width', true);
                             $height = get_post_meta($post_id, 'image_' . $i . '_height', true);
                             $medium = get_post_meta($post_id, 'image_' . $i . '_medium', true);
+                            $support = get_post_meta($post_id, 'image_' . $i . '_support', true);
 
                             // Display the data if the image URL is set
                             if ($image_url) {
                                 echo '<div class="image-meta-block">';
-                                echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($title) . '" style="" data-title="' . esc_attr($title) . '" data-width="' . esc_attr($width) . '" data-height="' . esc_attr($height) . '" data-medium="' . esc_attr($medium) . '">';
+                                echo '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($title) . '" style="" data-title="' . esc_attr($title) . '" data-width="' . esc_attr($width) . '" data-height="' . esc_attr($height) . '" data-medium="' . esc_attr($medium) . '"data-support="' . esc_attr($support) . '">';
                                 echo '</div>';
                             }                            
                         }
@@ -121,7 +133,11 @@ function display_scholarship_modal($painting_id) {
                 <div class="textFields">
                     <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
                     <h4>Age: <?php echo esc_attr($fp_author_age1); ?></h4>
-                    <h4><?php if(!$year_in_school_expl) { echo esc_attr($fp_author_year_in_school1); } else{ echo esc_attr($fp_author_year_in_school_expl1); } ?> at <?php echo esc_attr($fp_author_college1); ?></h4>
+
+                    <h4><?php if(!$fp_author_year_in_school_expl1) { echo esc_attr($fp_author_year_in_school1); } else {
+                        echo esc_attr($fp_author_year_in_school_expl1);
+                    } ?> at <?php echo esc_attr($fp_author_college1); ?></h4>
+              
                     <h4><?php echo esc_attr($fp_author_city1); ?>, <?php echo esc_attr($fp_author_state1); ?></h4>
                     <div class="accordion">
                         <div class="accordion-item">
@@ -156,9 +172,11 @@ function display_scholarship_modal($painting_id) {
                 <h4 class="pnt-title">Painting Title: </h4>
                 <h4 class="pnt-dimen">Painting width x Painting height</h4>
                 <h4 class="pnt-medm">Medium: </h4>
+                <h4 class="pnt-sprt">Support: </h4>
             </div>
 
           <div class="entry-content">
+          
 
 
               <form id="judge-form1 judge-voting-form-<?php echo $painting_id; ?>" class="jury-voting-form judgeForm">
@@ -169,20 +187,148 @@ function display_scholarship_modal($painting_id) {
               <h6 class="jurorFormHeaders">Please place your vote below. </h6>
 
               <div class="inputWrapper">
-              <label for="creativity-<?php echo $painting_id; ?>">Creativity:</label>
-                <input type="number" id="creativity-<?php echo $painting_id; ?>" name="creativity" value="<?php echo esc_attr($judge_scores['creativity']); ?>" min="0" max="10">
+              <div id="formPage1" class="form-page formPage1" data-image="<?php echo $url ?>" >
+              <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <label for="biography-<?php echo $painting_id; ?>">Biography:</label>
+                <input type="text" id="biography-<?php echo $painting_id; ?>" name="biography" value="<?php echo esc_attr($judge_scores['biography']); ?>">
 
-                <label for="color_use-<?php echo $painting_id; ?>">Use of Color:</label>
-                <input type="number" id="color_use-<?php echo $painting_id; ?>" name="color_use" value="<?php echo esc_attr($judge_scores['color_use']); ?>" min="0" max="10">
+                <label for="statement-<?php echo $painting_id; ?>">Statement:</label>
+                <input type="text" id="statement-<?php echo $painting_id; ?>" name="statement" value="<?php echo esc_attr($judge_scores['statement']); ?>">
 
-                <label for="originality-<?php echo $painting_id; ?>">Originality:</label>
-                <input type="number" id="originality-<?php echo $painting_id; ?>" name="originality" value="<?php echo esc_attr($judge_scores['originality']); ?>" min="0" max="10">
-            
+                <label for="annotated_list-<?php echo $painting_id; ?>">Annotated List:</label>
+                <input type="text" id="annotated_list-<?php echo $painting_id; ?>" name="annotated_list" value="<?php echo esc_attr($judge_scores['annotated_list']); ?>">
+
+                <label for="letter_reccomendation-<?php echo $painting_id; ?>">Letter of Recommendation:</label>
+                <input type="text" id="letter_reccomendation-<?php echo $painting_id; ?>" name="letter_reccomendation" value="<?php echo esc_attr($judge_scores['letter_reccomendation']); ?>">
+                </div>
+                <div id="formPage2" class="form-page formPage2" data-image="<?php echo esc_url($image_url_1) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_1) ?></h5>
+
+                <label for="image_1_technique-<?php echo $painting_id; ?>">Image 1 Technique:</label>
+                <input type="number" id="image_1_technique-<?php echo $painting_id; ?>" name="image_1_technique" value="<?php echo esc_attr($judge_scores['image_1_technique']); ?>" min="0" max="10">
+
+                <label for="image_1_composition-<?php echo $painting_id; ?>">Image 1 Composition:</label>
+                <input type="number" id="image_1_composition-<?php echo $painting_id; ?>" name="image_1_composition" value="<?php echo esc_attr($judge_scores['image_1_composition']); ?>" min="0" max="10">
+
+                <label for="image_1_value_color-<?php echo $painting_id; ?>">Image 1 Value/Color:</label>
+                <input type="number" id="image_1_value_color-<?php echo $painting_id; ?>" name="image_1_value_color" value="<?php echo esc_attr($judge_scores['image_1_value_color']); ?>" min="0" max="10">
+
+                <label for="image_1_creativity-<?php echo $painting_id; ?>">Image 1 Creativity:</label>
+                <input type="number" id="image_1_creativity-<?php echo $painting_id; ?>" name="image_1_creativity" value="<?php echo esc_attr($judge_scores['image_1_creativity']); ?>" min="0" max="10">
+
+                <label for="image_1_emotional_impact-<?php echo $painting_id; ?>">Image 1 Emotional Impact:</label>
+                <input type="number" id="image_1_emotional_impact-<?php echo $painting_id; ?>" name="image_1_emotional_impact" value="<?php echo esc_attr($judge_scores['image_1_emotional_impact']); ?>" min="0" max="10">
+
+                <label for="image_1_total-<?php echo $painting_id; ?>">Image 1 Total:</label>
+                <input type="number" id="image_1_total-<?php echo $painting_id; ?>" name="image_1_total" value="<?php echo esc_attr($judge_scores['image_1_total']); ?>" min="0" max="50">
+
+                </div>
+                <div id="formPage3" class="form-page formPage3" data-image="<?php echo esc_url($image_url_2) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_2) ?></h5>
+
+                <label for="image_2_technique-<?php echo $painting_id; ?>">Image 2 Technique:</label>
+                <input type="number" id="image_2_technique-<?php echo $painting_id; ?>" name="image_2_technique" value="<?php echo esc_attr($judge_scores['image_2_technique']); ?>" min="0" max="10">
+
+                <label for="image_2_composition-<?php echo $painting_id; ?>">Image 2 Composition:</label>
+                <input type="number" id="image_2_composition-<?php echo $painting_id; ?>" name="image_2_composition" value="<?php echo esc_attr($judge_scores['image_2_composition']); ?>" min="0" max="10">
+
+                <label for="image_2_value_color-<?php echo $painting_id; ?>">Image 2 Value/Color:</label>
+                <input type="number" id="image_2_value_color-<?php echo $painting_id; ?>" name="image_2_value_color" value="<?php echo esc_attr($judge_scores['image_2_value_color']); ?>" min="0" max="10">
+
+                <label for="image_2_creativity-<?php echo $painting_id; ?>">Image 2 Creativity:</label>
+                <input type="number" id="image_2_creativity-<?php echo $painting_id; ?>" name="image_2_creativity" value="<?php echo esc_attr($judge_scores['image_2_creativity']); ?>" min="0" max="10">
+
+                <label for="image_2_emotional_impact-<?php echo $painting_id; ?>">Image 2 Emotional Impact:</label>
+                <input type="number" id="image_2_emotional_impact-<?php echo $painting_id; ?>" name="image_2_emotional_impact" value="<?php echo esc_attr($judge_scores['image_2_emotional_impact']); ?>" min="0" max="10">
+
+                <label for="image_2_total-<?php echo $painting_id; ?>">Image 2 Total:</label>
+                <input type="number" id="image_2_total-<?php echo $painting_id; ?>" name="image_2_total" value="<?php echo esc_attr($judge_scores['image_2_total']); ?>" min="0" max="50">
+
+                </div>
+                <div id="formPage4" class="form-page formPage4" data-image="<?php echo esc_url($image_url_3) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_3) ?></h5>
+
+                <label for="image_3_technique-<?php echo $painting_id; ?>">Image 3 Technique:</label>
+                <input type="number" id="image_3_technique-<?php echo $painting_id; ?>" name="image_3_technique" value="<?php echo esc_attr($judge_scores['image_3_technique']); ?>" min="0" max="10">
+
+                <label for="image_3_composition-<?php echo $painting_id; ?>">Image 3 Composition:</label>
+                <input type="number" id="image_3_composition-<?php echo $painting_id; ?>" name="image_3_composition" value="<?php echo esc_attr($judge_scores['image_3_composition']); ?>" min="0" max="10">
+
+                <label for="image_3_value_color-<?php echo $painting_id; ?>">Image 3 Value/Color:</label>
+                <input type="number" id="image_3_value_color-<?php echo $painting_id; ?>" name="image_3_value_color" value="<?php echo esc_attr($judge_scores['image_3_value_color']); ?>" min="0" max="10">
+
+                <label for="image_3_creativity-<?php echo $painting_id; ?>">Image 3 Creativity:</label>
+                <input type="number" id="image_3_creativity-<?php echo $painting_id; ?>" name="image_3_creativity" value="<?php echo esc_attr($judge_scores['image_3_creativity']); ?>" min="0" max="10">
+
+                <label for="image_3_emotional_impact-<?php echo $painting_id; ?>">Image 3 Emotional Impact:</label>
+                <input type="number" id="image_3_emotional_impact-<?php echo $painting_id; ?>" name="image_3_emotional_impact" value="<?php echo esc_attr($judge_scores['image_3_emotional_impact']); ?>" min="0" max="10">
+
+                <label for="image_3_total-<?php echo $painting_id; ?>">Image 3 Total:</label>
+                <input type="number" id="image_3_total-<?php echo $painting_id; ?>" name="image_3_total" value="<?php echo esc_attr($judge_scores['image_3_total']); ?>" min="0" max="50">
+
+                </div>
+                <div id="formPage5" class="form-page formPage5" data-image="<?php echo esc_url($image_url_4) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_4) ?></h5>
+
+                <label for="image_4_technique-<?php echo $painting_id; ?>">Image 4 Technique:</label>
+                <input type="number" id="image_4_technique-<?php echo $painting_id; ?>" name="image_4_technique" value="<?php echo esc_attr($judge_scores['image_4_technique']); ?>" min="0" max="10">
+
+                <label for="image_4_composition-<?php echo $painting_id; ?>">Image 4 Composition:</label>
+                <input type="number" id="image_4_composition-<?php echo $painting_id; ?>" name="image_4_composition" value="<?php echo esc_attr($judge_scores['image_4_composition']); ?>" min="0" max="10">
+
+                <label for="image_4_value_color-<?php echo $painting_id; ?>">Image 4 Value/Color:</label>
+                <input type="number" id="image_4_value_color-<?php echo $painting_id; ?>" name="image_4_value_color" value="<?php echo esc_attr($judge_scores['image_4_value_color']); ?>" min="0" max="10">
+
+                <label for="image_4_creativity-<?php echo $painting_id; ?>">Image 4 Creativity:</label>
+                <input type="number" id="image_4_creativity-<?php echo $painting_id; ?>" name="image_4_creativity" value="<?php echo esc_attr($judge_scores['image_4_creativity']); ?>" min="0" max="10">
+
+                <label for="image_4_emotional_impact-<?php echo $painting_id; ?>">Image 4 Emotional Impact:</label>
+                <input type="number" id="image_4_emotional_impact-<?php echo $painting_id; ?>" name="image_4_emotional_impact" value="<?php echo esc_attr($judge_scores['image_4_emotional_impact']); ?>" min="0" max="10">
+
+                <label for="image_4_total-<?php echo $painting_id; ?>">Image 4 Total:</label>
+                <input type="number" id="image_4_total-<?php echo $painting_id; ?>" name="image_4_total" value="<?php echo esc_attr($judge_scores['image_4_total']); ?>" min="0" max="50">
+
+                </div>
+                <div id="formPage6" class="form-page formPage6" data-image="<?php echo esc_url($image_url_5) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_5) ?></h5>
+
+                <label for="image_5_technique-<?php echo $painting_id; ?>">Image 5 Technique:</label>
+                <input type="number" id="image_5_technique-<?php echo $painting_id; ?>" name="image_5_technique" value="<?php echo esc_attr($judge_scores['image_5_technique']); ?>" min="0" max="10">
+
+                <label for="image_5_composition-<?php echo $painting_id; ?>">Image 5 Composition:</label>
+                <input type="number" id="image_5_composition-<?php echo $painting_id; ?>" name="image_5_composition" value="<?php echo esc_attr($judge_scores['image_5_composition']); ?>" min="0" max="10">
+
+                <label for="image_5_value_color-<?php echo $painting_id; ?>">Image 5 Value/Color:</label>
+                <input type="number" id="image_5_value_color-<?php echo $painting_id; ?>" name="image_5_value_color" value="<?php echo esc_attr($judge_scores['image_5_value_color']); ?>" min="0" max="10">
+
+                <label for="image_5_creativity-<?php echo $painting_id; ?>">Image 5 Creativity:</label>
+                <input type="number" id="image_5_creativity-<?php echo $painting_id; ?>" name="image_5_creativity" value="<?php echo esc_attr($judge_scores['image_5_creativity']); ?>" min="0" max="10">
+
+                <label for="image_5_emotional_impact-<?php echo $painting_id; ?>">Image 5 Emotional Impact:</label>
+                <input type="number" id="image_5_emotional_impact-<?php echo $painting_id; ?>" name="image_5_emotional_impact" value="<?php echo esc_attr($judge_scores['image_5_emotional_impact']); ?>" min="0" max="10">
+
+                <label for="image_5_total-<?php echo $painting_id; ?>">Image 5 Total:</label>
+                <input type="number" id="image_5_total-<?php echo $painting_id; ?>" name="image_5_total" value="<?php echo esc_attr($judge_scores['image_5_total']); ?>" min="0" max="50">
+
+                </div>
                 </div>
               <input type="hidden" name="input-id" value="<?php echo $post_id ?>">
 
                <input type="hidden" id="currentSlide<?php echo $entryNumberModal; ?>">
-                <input class="judgeSubmit1" type="submit" data-slide="<?php echo $entryNumberModal; ?>" value="Vote">
+                <input class="judgeSubmit1" type="submit" data-slide="<?php echo $entryNumberModal; ?>" value="Save Vote">
+                <div class="form-nav-action-wrapper">
+                    <div class="form-nav-action">
+                        <button type="button" class="prevBtnVP" style="display:none;">Back</button>
+                    </div>
+                    <div class="form-nav-action">
+                        <button type="button" class="nextBtnVP">Continue Voting</button>
+                    </div>
+                </div>
                                   <div class="postresult"></div>
               </div>
               <div class="button-action-wrapper">
@@ -200,8 +346,8 @@ function display_scholarship_modal($painting_id) {
                 </p>
             </div>
             <div class="sliderControl">
-                       <input class="navSlides prevSlide" type="" onclick="plusSlides1(-1)" value="❮ Previous">
-                      <input class="navSlides nextSlide" type="" onclick="plusSlides1(1)" value="Next ❯">
+                       <input class="navSlides prevSlide" onclick="plusSlides1(-1)" value="❮ Previous Application">
+                      <input class="navSlides nextSlide" onclick="plusSlides1(1)" value="Next Application ❯">
                   </div>
             </div>
 
@@ -288,9 +434,41 @@ add_shortcode('scholarship_application', 'scholarship_application_shortcode');
 
 function get_judge_scores_for_painting($post_id, $judge_id) {
     $scores = [
-        'creativity' => '',
-        'color_use' => '',
-        'originality' => ''
+        'biography' => '',
+        'statement' => '',
+        'annotated_list' => '',
+        'letter_reccomendation' => '',
+        'image_1_total' => '',
+        'image_1_technique' => '',
+        'image_1_composition' => '',
+        'image_1_value_color' => '',
+        'image_1_creativity' => '',
+        'image_1_emotional_impact' => '',
+        'image_2_total' => '',
+        'image_2_technique' => '',
+        'image_2_composition' => '',
+        'image_2_value_color' => '',
+        'image_2_creativity' => '',
+        'image_2_emotional_impact' => '',
+        'image_3_total' => '',
+        'image_3_technique' => '',
+        'image_3_composition' => '',
+        'image_3_value_color' => '',
+        'image_3_creativity' => '',
+        'image_3_emotional_impact' => '',
+        'image_4_total' => '',
+        'image_4_technique' => '',
+        'image_4_composition' => '',
+        'image_4_value_color' => '',
+        'image_4_creativity' => '',
+        'image_4_emotional_impact' => '',
+        'image_5_total' => '',
+        'image_5_technique' => '',
+        'image_5_composition' => '',
+        'image_5_value_color' => '',
+        'image_5_creativity' => '',
+        'image_5_emotional_impact' => '',
+
     ];
 
     foreach ($scores as $criterion => $value) {
