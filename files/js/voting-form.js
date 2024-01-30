@@ -30,6 +30,9 @@ jQuery(document).ready(function ($) {
       jQuery(submitButton).val("Vote");
     }, 5000);
   });
+
+  let currentPage = 1;
+  const totalPages = 5; // Set this to your total number of pages
 });
 
 function openModal1() {
@@ -241,4 +244,91 @@ document.addEventListener("DOMContentLoaded", (event) => {
     firstAccordionButton.classList.add("active");
     firstAccordionButton.nextElementSibling.style.display = "block";
   }
+});
+
+function initializeForm(form) {
+  let currentPage = 1;
+  const totalPages = 6; // Total number of pages in the form
+
+  function showPage(pageNumber) {
+    for (let i = 1; i <= totalPages; i++) {
+      const page = form.querySelector(".formPage" + i);
+      page.style.display = "none";
+    }
+
+    const currentPageElement = form.querySelector(".formPage" + pageNumber);
+    currentPageElement.style.display = "flex";
+
+    // Update the image source
+    const newImageSrc = currentPageElement.getAttribute("data-image");
+    if (newImageSrc) {
+      const imageToUpdate = form
+        .closest(".mySlides1")
+        .querySelector(".modalLeftCol > img");
+      if (imageToUpdate) {
+        imageToUpdate.src = newImageSrc;
+      }
+    }
+
+    form.querySelector(".prevBtnVP").style.display =
+      pageNumber === 1 ? "none" : "inline";
+    form.querySelector(".nextBtnVP").style.display =
+      pageNumber === totalPages ? "none" : "inline";
+  }
+
+  function changePage(step) {
+    currentPage += step;
+    showPage(currentPage);
+  }
+
+  form
+    .querySelector(".prevBtnVP")
+    .addEventListener("click", () => changePage(-1));
+  form
+    .querySelector(".nextBtnVP")
+    .addEventListener("click", () => changePage(1));
+
+  showPage(currentPage);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".jury-voting-form").forEach(initializeForm);
+});
+
+function setupTotalCalculationForPage(page) {
+  // Find the total field on the page
+  const totalField = page.querySelector('[name*="_total"]');
+  if (!totalField) return;
+
+  totalField.readOnly = true; // Making the total field read-only
+
+  // Function to calculate and update total
+  function updateTotal() {
+    let total = 0;
+    const inputFields = page.querySelectorAll(
+      'input[type="number"]:not([name*="_total"])'
+    );
+
+    inputFields.forEach((field) => {
+      const value = parseInt(field.value, 10) || 0;
+      total += value;
+    });
+
+    totalField.value = total;
+  }
+
+  // Attach event listeners to each number input field
+  page.querySelectorAll('input[type="number"]').forEach((field) => {
+    field.addEventListener("input", updateTotal);
+  });
+
+  // Initial total calculation
+  updateTotal();
+}
+
+// Initialize total calculation for each page in each form
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelectorAll(".jury-voting-form .form-page")
+    .forEach(setupTotalCalculationForPage);
 });

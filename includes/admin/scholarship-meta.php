@@ -28,55 +28,51 @@ function display_judges_scores($post) {
 
     echo '<table>';
     echo '<thead><tr>
+            <th>Judge</th>
             <th>Biography</th>
             <th>Statement</th>
             <th>Annotated List</th>
             <th>Letter of Recommendation</th>
-            <th class="image-total">Image 1 Total
+            <th class="image-total">Image 1 Total</th>
                 <div class="image-details">
-                    <span>Technique</span>
-                    <span>Composition</span>
-                    <span>Value/Color</span>
-                    <span>Creativity</span>
-                    <span>Emotional Impact</span>
+                    <th>Technique</th>
+                    <th>Composition</th>
+                    <th>Value/Color</th>
+                    <th>Creativity</th>
+                    <th>Emotional Impact</th>
                 </div>
-            </th>
-            <th class="image-total">Image 2 Total
+            <th class="image-total">Image 2 Total</th>
                 <div class="image-details">
-                    <span>Technique</span>
-                    <span>Composition</span>
-                    <span>Value/Color</span>
-                    <span>Creativity</span>
-                    <span>Emotional Impact</span>
+                    <th>Technique</th>
+                    <th>Composition</th>
+                    <th>Value/Color</th>
+                    <th>Creativity</th>
+                    <th>Emotional Impact</th>
                 </div>
-            </th>
-            <th class="image-total">Image 3 Total                
-                <div class="image-details">
-                    <span>Technique</span>
-                    <span>Composition</span>
-                    <span>Value/Color</span>
-                    <span>Creativity</span>
-                    <span>Emotional Impact</span>
-                </div>
-            </th>
-            <th class="image-total">Image 4 Total                
-                <div class="image-details">
-                    <span>Technique</span>
-                    <span>Composition</span>
-                    <span>Value/Color</span>
-                    <span>Creativity</span>
-                    <span>Emotional Impact</span>
-                </div>
-            </th>
-            <th class="image-total">Image 5 Total                
-                <div class="image-details">
-                    <span>Technique</span>
-                    <span>Composition</span>
-                    <span>Value/Color</span>
-                    <span>Creativity</span>
-                    <span>Emotional Impact</span>
-                </div>
-            </th>
+            <th class="image-total">Image 3 Total</th>
+            <div class="image-details">
+                <th>Technique</th>
+                <th>Composition</th>
+                <th>Value/Color</th>
+                <th>Creativity</th>
+                <th>Emotional Impact</th>
+            </div>
+            <th class="image-total">Image 4 Total</th>
+            <div class="image-details">
+                <th>Technique</th>
+                <th>Composition</th>
+                <th>Value/Color</th>
+                <th>Creativity</th>
+                <th>Emotional Impact</th>
+            </div>
+            <th class="image-total">Image 5 Total</th>
+            <div class="image-details">
+                <th>Technique</th>
+                <th>Composition</th>
+                <th>Value/Color</th>
+                <th>Creativity</th>
+                <th>Emotional Impact</th>
+            </div>
         </tr></thead>';
 echo '<tbody>';
 

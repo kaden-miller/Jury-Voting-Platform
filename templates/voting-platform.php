@@ -76,7 +76,17 @@ function display_scholarship_modal($painting_id) {
     // Path to pdf icon
     $pdf_image_url = $plugin_url . '/files/images/PDF_file_icon.png';
 
+    $image_url_1 = get_post_meta($post_id, 'image_1', true);
+    $image_url_2 = get_post_meta($post_id, 'image_2', true);
+    $image_url_3 = get_post_meta($post_id, 'image_3', true);
+    $image_url_4 = get_post_meta($post_id, 'image_4', true);
+    $image_url_5 = get_post_meta($post_id, 'image_5', true);
 
+    $image_title_1 = get_post_meta($post_id, 'image_1_title', true);
+    $image_title_2 = get_post_meta($post_id, 'image_2_title', true);
+    $image_title_3 = get_post_meta($post_id, 'image_3_title', true);
+    $image_title_4 = get_post_meta($post_id, 'image_4_title', true);
+    $image_title_5 = get_post_meta($post_id, 'image_5_title', true);
 
     // Assuming $post_id is the ID of the current post
     ?>
@@ -164,6 +174,7 @@ function display_scholarship_modal($painting_id) {
             </div>
 
           <div class="entry-content">
+          
 
 
               <form id="judge-form1 judge-voting-form-<?php echo $painting_id; ?>" class="jury-voting-form judgeForm">
@@ -174,6 +185,8 @@ function display_scholarship_modal($painting_id) {
               <h6 class="jurorFormHeaders">Please place your vote below. </h6>
 
               <div class="inputWrapper">
+              <div id="formPage1" class="form-page formPage1" data-image="<?php echo $url ?>" >
+              <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
                 <label for="biography-<?php echo $painting_id; ?>">Biography:</label>
                 <input type="text" id="biography-<?php echo $painting_id; ?>" name="biography" value="<?php echo esc_attr($judge_scores['biography']); ?>">
 
@@ -185,9 +198,10 @@ function display_scholarship_modal($painting_id) {
 
                 <label for="letter_reccomendation-<?php echo $painting_id; ?>">Letter of Recommendation:</label>
                 <input type="text" id="letter_reccomendation-<?php echo $painting_id; ?>" name="letter_reccomendation" value="<?php echo esc_attr($judge_scores['letter_reccomendation']); ?>">
-
-                <label for="image_1_total-<?php echo $painting_id; ?>">Image 1 Total:</label>
-                <input type="number" id="image_1_total-<?php echo $painting_id; ?>" name="image_1_total" value="<?php echo esc_attr($judge_scores['image_1_total']); ?>" min="0" max="10">
+                </div>
+                <div id="formPage2" class="form-page formPage2" data-image="<?php echo esc_url($image_url_1) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_1) ?></h5>
 
                 <label for="image_1_technique-<?php echo $painting_id; ?>">Image 1 Technique:</label>
                 <input type="number" id="image_1_technique-<?php echo $painting_id; ?>" name="image_1_technique" value="<?php echo esc_attr($judge_scores['image_1_technique']); ?>" min="0" max="10">
@@ -204,8 +218,13 @@ function display_scholarship_modal($painting_id) {
                 <label for="image_1_emotional_impact-<?php echo $painting_id; ?>">Image 1 Emotional Impact:</label>
                 <input type="number" id="image_1_emotional_impact-<?php echo $painting_id; ?>" name="image_1_emotional_impact" value="<?php echo esc_attr($judge_scores['image_1_emotional_impact']); ?>" min="0" max="10">
 
-                <label for="image_2_total-<?php echo $painting_id; ?>">Image 2 Total:</label>
-                <input type="number" id="image_2_total-<?php echo $painting_id; ?>" name="image_2_total" value="<?php echo esc_attr($judge_scores['image_2_total']); ?>" min="0" max="10">
+                <label for="image_1_total-<?php echo $painting_id; ?>">Image 1 Total:</label>
+                <input type="number" id="image_1_total-<?php echo $painting_id; ?>" name="image_1_total" value="<?php echo esc_attr($judge_scores['image_1_total']); ?>" min="0" max="10">
+
+                </div>
+                <div id="formPage3" class="form-page formPage3" data-image="<?php echo esc_url($image_url_2) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_2) ?></h5>
 
                 <label for="image_2_technique-<?php echo $painting_id; ?>">Image 2 Technique:</label>
                 <input type="number" id="image_2_technique-<?php echo $painting_id; ?>" name="image_2_technique" value="<?php echo esc_attr($judge_scores['image_2_technique']); ?>" min="0" max="10">
@@ -222,8 +241,13 @@ function display_scholarship_modal($painting_id) {
                 <label for="image_2_emotional_impact-<?php echo $painting_id; ?>">Image 2 Emotional Impact:</label>
                 <input type="number" id="image_2_emotional_impact-<?php echo $painting_id; ?>" name="image_2_emotional_impact" value="<?php echo esc_attr($judge_scores['image_2_emotional_impact']); ?>" min="0" max="10">
 
-                <label for="image_3_total-<?php echo $painting_id; ?>">Image 3 Total:</label>
-                <input type="number" id="image_3_total-<?php echo $painting_id; ?>" name="image_3_total" value="<?php echo esc_attr($judge_scores['image_3_total']); ?>" min="0" max="10">
+                <label for="image_2_total-<?php echo $painting_id; ?>">Image 2 Total:</label>
+                <input type="number" id="image_2_total-<?php echo $painting_id; ?>" name="image_2_total" value="<?php echo esc_attr($judge_scores['image_2_total']); ?>" min="0" max="10">
+
+                </div>
+                <div id="formPage4" class="form-page formPage4" data-image="<?php echo esc_url($image_url_3) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_3) ?></h5>
 
                 <label for="image_3_technique-<?php echo $painting_id; ?>">Image 3 Technique:</label>
                 <input type="number" id="image_3_technique-<?php echo $painting_id; ?>" name="image_3_technique" value="<?php echo esc_attr($judge_scores['image_3_technique']); ?>" min="0" max="10">
@@ -240,8 +264,13 @@ function display_scholarship_modal($painting_id) {
                 <label for="image_3_emotional_impact-<?php echo $painting_id; ?>">Image 3 Emotional Impact:</label>
                 <input type="number" id="image_3_emotional_impact-<?php echo $painting_id; ?>" name="image_3_emotional_impact" value="<?php echo esc_attr($judge_scores['image_3_emotional_impact']); ?>" min="0" max="10">
 
-                <label for="image_4_total-<?php echo $painting_id; ?>">Image 4 Total:</label>
-                <input type="number" id="image_4_total-<?php echo $painting_id; ?>" name="image_4_total" value="<?php echo esc_attr($judge_scores['image_4_total']); ?>" min="0" max="10">
+                <label for="image_3_total-<?php echo $painting_id; ?>">Image 3 Total:</label>
+                <input type="number" id="image_3_total-<?php echo $painting_id; ?>" name="image_3_total" value="<?php echo esc_attr($judge_scores['image_3_total']); ?>" min="0" max="10">
+
+                </div>
+                <div id="formPage5" class="form-page formPage5" data-image="<?php echo esc_url($image_url_4) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_4) ?></h5>
 
                 <label for="image_4_technique-<?php echo $painting_id; ?>">Image 4 Technique:</label>
                 <input type="number" id="image_4_technique-<?php echo $painting_id; ?>" name="image_4_technique" value="<?php echo esc_attr($judge_scores['image_4_technique']); ?>" min="0" max="10">
@@ -258,8 +287,13 @@ function display_scholarship_modal($painting_id) {
                 <label for="image_4_emotional_impact-<?php echo $painting_id; ?>">Image 4 Emotional Impact:</label>
                 <input type="number" id="image_4_emotional_impact-<?php echo $painting_id; ?>" name="image_4_emotional_impact" value="<?php echo esc_attr($judge_scores['image_4_emotional_impact']); ?>" min="0" max="10">
 
-                <label for="image_5_total-<?php echo $painting_id; ?>">Image 5 Total:</label>
-                <input type="number" id="image_5_total-<?php echo $painting_id; ?>" name="image_5_total" value="<?php echo esc_attr($judge_scores['image_5_total']); ?>" min="0" max="10">
+                <label for="image_4_total-<?php echo $painting_id; ?>">Image 4 Total:</label>
+                <input type="number" id="image_4_total-<?php echo $painting_id; ?>" name="image_4_total" value="<?php echo esc_attr($judge_scores['image_4_total']); ?>" min="0" max="10">
+
+                </div>
+                <div id="formPage6" class="form-page formPage6" data-image="<?php echo esc_url($image_url_5) ?>" style="display:none;">
+                <h4><?php echo esc_attr($fp_author_fn1); ?> <?php echo esc_attr($fp_author_ln1); ?></h4>
+                <h5><?php echo esc_attr($image_title_5) ?></h5>
 
                 <label for="image_5_technique-<?php echo $painting_id; ?>">Image 5 Technique:</label>
                 <input type="number" id="image_5_technique-<?php echo $painting_id; ?>" name="image_5_technique" value="<?php echo esc_attr($judge_scores['image_5_technique']); ?>" min="0" max="10">
@@ -275,11 +309,24 @@ function display_scholarship_modal($painting_id) {
 
                 <label for="image_5_emotional_impact-<?php echo $painting_id; ?>">Image 5 Emotional Impact:</label>
                 <input type="number" id="image_5_emotional_impact-<?php echo $painting_id; ?>" name="image_5_emotional_impact" value="<?php echo esc_attr($judge_scores['image_5_emotional_impact']); ?>" min="0" max="10">
+
+                <label for="image_5_total-<?php echo $painting_id; ?>">Image 5 Total:</label>
+                <input type="number" id="image_5_total-<?php echo $painting_id; ?>" name="image_5_total" value="<?php echo esc_attr($judge_scores['image_5_total']); ?>" min="0" max="10">
+
+                </div>
                 </div>
               <input type="hidden" name="input-id" value="<?php echo $post_id ?>">
 
                <input type="hidden" id="currentSlide<?php echo $entryNumberModal; ?>">
-                <input class="judgeSubmit1" type="submit" data-slide="<?php echo $entryNumberModal; ?>" value="Vote">
+                <input class="judgeSubmit1" type="submit" data-slide="<?php echo $entryNumberModal; ?>" value="Save Vote">
+                <div class="form-nav-action-wrapper">
+                    <div class="form-nav-action">
+                        <button type="button" class="prevBtnVP" style="display:none;">Back</button>
+                    </div>
+                    <div class="form-nav-action">
+                        <button type="button" class="nextBtnVP">Continue Voting</button>
+                    </div>
+                </div>
                                   <div class="postresult"></div>
               </div>
               <div class="button-action-wrapper">
@@ -297,8 +344,8 @@ function display_scholarship_modal($painting_id) {
                 </p>
             </div>
             <div class="sliderControl">
-                       <input class="navSlides prevSlide" type="" onclick="plusSlides1(-1)" value="❮ Previous">
-                      <input class="navSlides nextSlide" type="" onclick="plusSlides1(1)" value="Next ❯">
+                       <input class="navSlides prevSlide" type="" onclick="plusSlides1(-1)" value="❮ Previous Application">
+                      <input class="navSlides nextSlide" type="" onclick="plusSlides1(1)" value="Next Application ❯">
                   </div>
             </div>
 
