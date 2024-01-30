@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
     setTimeout(function () {
       jQuery(submitButton).removeClass("success");
       jQuery(submitButton).val("Vote");
-    }, 5000);
+    }, 2000);
   });
 
   let currentPage = 1;
@@ -294,6 +294,10 @@ function initializeForm(form) {
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".jury-voting-form").forEach(initializeForm);
 });
+
+function reinitializeForm() {
+  document.querySelectorAll(".jury-voting-form").forEach(initializeForm);
+}
 
 function setupTotalCalculationForPage(page) {
   // Find the total field on the page

@@ -61,6 +61,13 @@ class Jury_Plugin_CP {
             wp_insert_post($new_page);
             
         }
+
+            // Create the custom role
+            add_role(
+                'scholarship_juror',
+                'Scholarship Juror',
+                array('read') // Minimal capabilities, customize as needed
+            );
     }
 
     /**

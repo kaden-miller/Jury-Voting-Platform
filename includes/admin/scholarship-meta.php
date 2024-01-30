@@ -77,6 +77,7 @@ function display_judges_scores($post) {
                 <th>Image 5 Emotional Impact</th>
             </div>
             <th class="image-total">Image 5 Total</th>
+            <th class="image-total">Judge Total</th>
 
         </tr></thead>';
 echo '<tbody>';
