@@ -10,8 +10,11 @@ class Jury_Plugin_CP {
         include_once(WPS_DIRECTORY_PATH . 'includes/admin/scholarship-meta.php');
         include_once(WPS_DIRECTORY_PATH . 'templates/voting-platform.php');
         include_once(WPS_DIRECTORY_PATH . 'includes/admin/custom-post-types.php');
+// 		include_once(WPS_DIRECTORY_PATH . 'includes/admin/judging-role.php');
         // include_once(WPS_DIRECTORY_PATH . 'includes/admin/meta-troubleshooting.php');
         include_once(WPS_DIRECTORY_PATH . 'includes/frontend/ajax-form-handling.php');
+		
+
 
 
         // Plugin uninstall hook
@@ -32,6 +35,9 @@ class Jury_Plugin_CP {
         add_action('init', 'create_scholarship_taxonomy');
 
 
+
+		// Restrict page to admins and juror roles
+		add_action('template_redirect', array($this, 'restrict_page_access'));
 
 
     }
@@ -76,6 +82,22 @@ class Jury_Plugin_CP {
      * @method plugin_deactivate
      */
     public function plugin_deactivate() { }
+
+	
+	public function restrict_page_access() {
+        if (is_page('Scholarship Application')) {
+            // Get the current user object
+            $current_user = wp_get_current_user();
+
+            // Check if the user has the 'administrator' role
+			if (!in_array('administrator', $current_user->roles) && !in_array('scholarship_juror', $current_user->roles)) {
+                // If not an administrator, redirect to the homepage
+                wp_redirect(home_url());
+                exit;
+            }
+        }
+    }
+
 
     /**
      * Plugin init function
